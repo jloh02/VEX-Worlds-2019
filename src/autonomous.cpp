@@ -2,8 +2,6 @@
 #include "base_lib.hpp"
 #include "mech_lib.hpp"
 
-#define RED true
-
 /*
 prosv5 b
 prosv5 u
@@ -22,15 +20,29 @@ prosv5 u
  */
 
 void autonomous() {
+  Motor intake(intakePort);
+
   double start = millis();
   Task cataControl(catapultControl);
   Task basControl(baseControl);
   Task basOdometry(baseOdometry);
   Task basMotorControl(baseMotorControl);
   Task lifControl(liftControl);
-  Task intControl(intakeControl);
-
-
-  baseMove(3000,0.4,0.0);
-
+  
+  baseMove(300,0.28,1.4);
+  waitBase(1100);
+  delay(500);
+  intake.move(-42);
+  baseMove(-90,0.9,0.8);
+  waitBase(1000);
+  //delay(150);
+  intake.move(0);
+  delay(350);
+  intake.move(100);
+  baseMove(-150,0.63,1.4);
+  //delay(100);
+  //intake.move(100);
+  waitBase(1000);
+  delay(1000);
+  intake.move(0);
 }

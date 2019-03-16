@@ -5,15 +5,14 @@ extern int autonNum;
 extern bool catapultReady;
 extern bool catapultActivated;
 
-#define FLport 1
+#define FLport 4
 #define FRport 2
-#define BLport 11
-#define BRport 12
-#define liftLPort 4
-#define liftRPort 3
-#define intakePort 13
-#define catapultLPort 14
-#define catapultRPort 15
+#define BLport 3
+#define BRport 1
+#define liftPort 20
+#define intakePort 8
+#define catapultLPort 10
+#define catapultRPort 9
 
 #define catapultPotPort 1
 

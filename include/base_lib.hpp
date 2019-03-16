@@ -6,7 +6,7 @@ void baseOdometry(void * ignore);     //Calculates coordinates using odometry
 void baseMotorControl(void * ignore); //Ramping for motors
 void baseControl(void * ignore);      //Motor control using PD Loop
 
-void waitBase();            //While loop to wait for base to finish
+void waitBase(double cutoff);            //While loop to wait for base to finish
 
 //Straight moves
 void baseMove(double dis);  //Default PD

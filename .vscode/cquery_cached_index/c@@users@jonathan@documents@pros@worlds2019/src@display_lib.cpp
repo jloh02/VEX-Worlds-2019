@@ -14,7 +14,7 @@ static lv_res_t setAuton(lv_obj_t * btn){
   // 2: Front tile, opponent and mid pole (12)    //
   // 3: Back tile, side pole and park (13)        //
   // 4: Back tile, pole cap, floor cap, park (13) //
-  // 5: Skills                                    //
+  // 999: Skills                                    //
   // 1-5 for RED, 6-10 for BLUE                   //
   //----------------------------------------------//
 
@@ -26,7 +26,7 @@ using namespace std;
 
 static const char * btnm_map[] = {"1", "2", "3", "4", "5", ""};
 static const string display_map[] =
-{"1 Red","2 Red","3 Red","4 Red","Skills","1 Blue","2 Blue","3 Blue","4 Blue","5 Blue"};
+{"1 Red","2 Red","3 Red","4 Red","5 Red","1 Blue","2 Blue","3 Blue","4 Blue","5 Blue"};
 
 /*Called when a button is released ot long pressed*/
 static lv_res_t btnm_action_red(lv_obj_t * btnm, const char *txt)
@@ -58,6 +58,10 @@ static lv_res_t btnm_action_blue(lv_obj_t * btnm, const char *txt)
 }
 
 lv_res_t calibSensors(lv_obj_t * btn){
+  autonNum = 999;
+
+  string output = "Auton Selected: Skills";
+  lv_label_set_text(title, output.c_str());
   return LV_RES_OK; /*Return OK because the button matrix is not deleted*/
 }
 
@@ -133,7 +137,7 @@ void initSelector(){
   lv_style_copy(&style_btn_calib_rel, &style_btn_rel);
   style_btn_calib_rel.body.main_color = LV_COLOR_MAKE(0x80,0x80,0x80);
   style_btn_calib_rel.body.grad_color = LV_COLOR_MAKE(0x80,0x80,0x80);
-  style_btn_calib_rel.body.border.color = LV_COLOR_MAKE(0xDD, 0x00, 0x00);
+  style_btn_calib_rel.body.border.color = LV_COLOR_MAKE(0x00, 0xFF, 0x00);
   style_btn_calib_rel.body.border.width = 3;
   style_btn_calib_rel.body.border.opa = LV_OPA_50;
   style_btn_calib_rel.body.radius = 20;
@@ -143,7 +147,7 @@ void initSelector(){
   lv_style_copy(&style_btn_calib_pr, &style_btn_pr);
   style_btn_calib_pr.body.main_color = LV_COLOR_MAKE(0x60,0x60,0x60);
   style_btn_calib_pr.body.grad_color = LV_COLOR_MAKE(0x60,0x60,0x60);
-  style_btn_calib_pr.body.border.color = LV_COLOR_MAKE(0xDD, 0x00, 0x00);
+  style_btn_calib_pr.body.border.color = LV_COLOR_MAKE(0x00, 0xFF, 0x00);
   style_btn_calib_pr.body.border.width = 3;
   style_btn_calib_pr.body.border.opa = LV_OPA_50;
   style_btn_calib_pr.body.radius = 20;
@@ -157,7 +161,7 @@ void initSelector(){
   lv_btn_set_action(calibBtn, LV_BTN_ACTION_CLICK, calibSensors);
 
   lv_obj_t * label = lv_label_create(calibBtn, NULL);
-  lv_label_set_text(label, "Calibrate");
+  lv_label_set_text(label, "SKILLS CHALLENGE");
 }
 /*
 void debugLabels(){

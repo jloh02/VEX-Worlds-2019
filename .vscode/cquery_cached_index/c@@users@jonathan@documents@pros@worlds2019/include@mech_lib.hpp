@@ -3,7 +3,7 @@
 
 void catapultControl(void * ignore);
 void liftControl(void * ignore);
-void intakeControl(void * ignore);
+//void intakeControl(void * ignore);
 
 void setIntake(int dir);
 void setLift(int height);

@@ -6,10 +6,12 @@ Motor BL (BLport);
 Motor FR (FRport);
 Motor BR (BRport);
 
+#define COMPETITION_MODE true //Set to false to test odometry during driver
+
 /*-----------------------------------------USER INPUT-----------------------------------------*/
 #define baseRPM 200									//Enter RPM of base motors
 #define UNLIMITED_POWER 100         //Enter maximum power of base motors
-#define rampingPow 15               //Increase in power / 25 millis
+#define rampingPow 10               //Increase in power / 25 millis
 
 #define PI      3.141592653589793238462643383279			//CONST PI VALUE
 #define halfPI  1.570796326794896619231321691639 			//CONST PI/2 VALUE
@@ -17,8 +19,8 @@ Motor BR (BRport);
 
 #define DISTANCE_LEEWAY   3.0				//Enter Distance Leeway in Degrees
 
-#define baseWidth 7.000 						//Enter distance in inches between side encoders
-#define inPerDeg 0.02881944444444		//Determine empirically using at least 1 rotation
+#define baseWidth 12.586 						//Enter distance in inches between side encoders
+#define inPerDeg 0.0354472057977424 //Determine empirically using at least 1 rotation
 /*--------------------------------------------------------------------------------------------*/
 
 typedef struct{
@@ -36,6 +38,8 @@ double encdL=0,encdR=0;
 double motorTargetL=0,motorTargetR=0;
 
 void baseOdometry(void * ignore){
+	Controller master(E_CONTROLLER_MASTER);
+
   FL.tare_position();
 	FR.tare_position();
 	BL.tare_position();
@@ -44,7 +48,7 @@ void baseOdometry(void * ignore){
   double prevEncdL = 0;
 	double prevEncdR = 0;
 	double prevAngle = 0;
-	while(true){
+	while(!COMPETITION_MODE || competition::is_autonomous()){
     encdL = FL.get_position();
     encdR = FR.get_position();
 		double encdChangeL = (encdL - prevEncdL)*inPerDeg;
@@ -70,20 +74,16 @@ void baseOdometry(void * ignore){
 		prevEncdR = encdR;
 		prevAngle = position.angle;
 
+		master.print(2,0,"%2.1f %2.1f %3f",position.x,position.y,position.angle/PI*180.0);
+
     Task::delay(5);
 	}
 }
 
-void base_power(double l, double r){
-  FL.move(l);
-	BL.move(l);
-	FR.move(r);
-	BR.move(r);
-}
-
 void baseMotorControl(void * ignore){
   double powerL=0,powerR=0;
-  while(true){
+	printf("Left \t Right\n");
+  while(competition::is_autonomous()){
     double diffL = motorTargetL - powerL;
     if(fabs(diffL) > rampingPow) powerL += diffL>0?rampingPow:-rampingPow;
     else powerL = motorTargetL;
@@ -97,7 +97,12 @@ void baseMotorControl(void * ignore){
     if(powerR > UNLIMITED_POWER) powerR = UNLIMITED_POWER;
     else if(powerR < -UNLIMITED_POWER) powerR = -UNLIMITED_POWER;
 
-    base_power(powerL,powerR);
+		FL.move(powerL);
+		BL.move(powerL);
+		FR.move(powerR);
+		BR.move(powerR);
+
+		printf("%4.0f \t %4.0f\n",powerL,powerR);
 
     Task::delay(25);
   }
@@ -105,9 +110,9 @@ void baseMotorControl(void * ignore){
 
 void baseControl(void * ignore){
   double prevErrorL = 0, prevErrorR = 0;
-  while(true){
-    double errorL = targetL - encdL;
-    double errorR = targetR - encdR;
+  while(competition::is_autonomous()){
+    double errorL = targetL - FL.get_position();
+    double errorR = targetR - FR.get_position();
 
     double deltaErrorL = errorL - prevErrorL;
     double deltaErrorR = errorR - prevErrorR;
@@ -118,12 +123,19 @@ void baseControl(void * ignore){
     motorTargetL = kP*errorL+kD*deltaErrorL;
     motorTargetR = kP*errorR+kD*deltaErrorR;
 
+		//printf("Motor controlling %f",motorTargetL);
+
     Task::delay(25);
   }
 }
 
-void waitBase(){
-	while(fabs(FL.get_target_position()-FL.get_position())<DISTANCE_LEEWAY && fabs(FR.get_target_position()-FR.get_position())<DISTANCE_LEEWAY){}
+void waitBase(double cutoff){
+	double start = millis();
+	while(fabs(targetL-FL.get_position())>DISTANCE_LEEWAY && fabs(targetR-FR.get_position())>DISTANCE_LEEWAY && millis()-start < cutoff){
+		//printf("TL:%3f, FL:%3f, TR:%3f, FR:%3f\n",targetL,FL.get_position(),targetR,FR.get_position());
+		printf("~\t  \t%4.0f \t %4.0f\n",targetL-FL.get_position(),targetR-FR.get_position());
+		delay(25);
+	}
 	FL.move_relative(0, 100);
 	BL.move_relative(0, 100);
 	FR.move_relative(0, 100);
@@ -131,16 +143,16 @@ void waitBase(){
 }
 
 void baseMove(double dis){
-  motorTargetL += dis;
-  motorTargetR += dis;
+  targetL += dis;
+  targetR += dis;
 
   kP = 0.8;
   kD = 0.4;
 }
 
 void baseMove(double dis, double p, double d){
-  motorTargetL += dis;
-  motorTargetR += dis;
+  targetL += dis;
+  targetR += dis;
 
   kP = p;
   kD = d;
@@ -148,8 +160,8 @@ void baseMove(double dis, double p, double d){
 
 void baseMove(double x, double y){
 	double distance = sqrt((y-position.y)*(y-position.y) + (x-position.x)*(x-position.x));
-  motorTargetL += distance;
-  motorTargetR += distance;
+  targetL += distance;
+  targetR += distance;
 
   kP = 0.8;
   kD = 0.4;
@@ -157,8 +169,8 @@ void baseMove(double x, double y){
 
 void baseMove(double x, double y, double p, double d){
 	double distance = sqrt((y-position.y)*(y-position.y) + (x-position.x)*(x-position.x));
-  motorTargetL += distance;
-  motorTargetR += distance;
+  targetL += distance;
+  targetR += distance;
 
   kP = p;
   kD = d;
@@ -166,8 +178,8 @@ void baseMove(double x, double y, double p, double d){
 
 void baseTurn(double angle){
   double diff = (angle + lastResetAngle - position.angle)*baseWidth/inPerDeg/2;
-  motorTargetL += diff;
-  motorTargetR += -diff;
+  targetL += diff;
+  targetR += -diff;
 
 	kP = 0.7;
   kD = 0.3;
@@ -175,8 +187,8 @@ void baseTurn(double angle){
 
 void baseTurn(double angle, double p, double d){
   double diff = (angle + lastResetAngle - position.angle)*baseWidth/inPerDeg/2;
-  motorTargetL += diff;
-  motorTargetR += -diff;
+  targetL += diff;
+  targetR += -diff;
 
   kP = p;
   kD = d;
@@ -184,8 +196,8 @@ void baseTurn(double angle, double p, double d){
 
 void baseTurnRelative(double angle){
   double diff = angle*baseWidth/inPerDeg/2;
-  motorTargetL += diff;
-  motorTargetR += -diff;
+  targetL += diff;
+  targetR += -diff;
 
   kP = 0.7;
   kD = 0.3;
@@ -193,8 +205,8 @@ void baseTurnRelative(double angle){
 
 void baseTurnRelative(double angle, double p, double d){
   double diff = angle*baseWidth/inPerDeg/2;
-  motorTargetL += diff;
-  motorTargetR += -diff;
+  targetL += diff;
+  targetR += -diff;
 
   kP = p;
   kD = d;
@@ -203,8 +215,8 @@ void baseTurnRelative(double angle, double p, double d){
 void baseTurn(double x, double y){
   double targAngle = atan((x-position.x)/(y-position.y));
   double diff = (targAngle - position.angle + lastResetAngle)*baseWidth/inPerDeg/2;
-  motorTargetL += diff;
-  motorTargetR += -diff;
+  targetL += diff;
+  targetR += -diff;
 
 	kP = 0.7;
   kD = 0.3;
