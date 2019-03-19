@@ -17,10 +17,12 @@ void initialize() {
 	Motor BL (BLport, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_DEGREES);
 	Motor FR (FRport, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_DEGREES);
 	Motor BR (BRport, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_DEGREES);
-	Motor lift (liftPort, E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_DEGREES);
+	Motor lift (liftPort, E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_DEGREES);
 	Motor intake(intakePort, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_DEGREES);
-	Motor catapultL(catapultLPort, E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_DEGREES);
-	Motor catapultR(catapultRPort, E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_DEGREES);
+	Motor catapult(catapultPort, E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_DEGREES);
+	Motor pusher(pusherPort, E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_DEGREES);
+	//Motor catapultL(catapultLPort, E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_DEGREES);
+	//Motor catapultR(catapultRPort, E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_DEGREES);
 }
 
 /**

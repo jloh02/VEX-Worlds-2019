@@ -6,11 +6,11 @@
 double intakeVelTarget = 0;
 int liftTarget = 0;
 
-#define catapultReadyAngle 1625
-#define catapultShootAngle 2500
+#define catapultReadyAngle 1600
+#define catapultShootAngle 2450
 
-#define liftP 0.7
-#define liftD 0.4
+#define liftP 2.5
+#define liftD 0.7
 
 #define intakeP 0.35
 
@@ -21,16 +21,16 @@ Motor intake(intakePort);
 */
 void catapultControl(void * ignore){
 	Controller master(E_CONTROLLER_MASTER);
-	Motor catapultL(catapultLPort);
-	Motor catapultR(catapultRPort);
+	Motor catapult(catapultPort);
+	//Motor catapultR(catapultRPort);
 	ADIAnalogIn cataPot(catapultPotPort);
 	//double kP = 0.4;
 	while(true){
-		if(master.get_digital(DIGITAL_Y) == 1) catapultL.move(-70), catapultR.move(-70);
+		if(master.get_digital(DIGITAL_Y) == 1) catapult.move(-70);//, catapultR.move(-70);
 		else if(cataPot.get_value() > catapultReadyAngle){
 			//master.print(2, 0, "%4d Readying...", cataPot.get_value());
-			catapultL.move(100);
-			catapultR.move(100);
+			catapult.move(100);
+			//catapultR.move(100);
 			catapultReady = false;
 		}
 		else {
@@ -39,22 +39,22 @@ void catapultControl(void * ignore){
 			if(catapultActivated){
         while(cataPot.get_value() < catapultReadyAngle) {
 					//master.print(2, 0, "%4d Firing...", cataPot.get_value());
-					catapultL.move(70);
-					catapultR.move(70);
+					catapult.move(100);
+					//catapultR.move(70);
           delay(25);
         }
         while(cataPot.get_value() < catapultShootAngle) {
 					//master.print(2, 0, "%4d Waiting...", cataPot.get_value());
-          catapultL.move_relative(0,100);
-					catapultR.move_relative(0,100);
+          catapult.move_relative(0,100);
+					//catapultR.move_relative(0,100);
           delay(25);
         }
 				delay(150);
   			catapultActivated = false;
 			}
 			else{
-				catapultL.move(0);
-				catapultR.move(0);
+				catapult.move(0);
+				//catapultR.move(0);
 				//catapultL.move_relative(0,100);
 				//catapultL.move_relative(0,100);
 			}
@@ -105,19 +105,10 @@ void intakeControl(void * ignore){
 	}
 }*/
 
-void setIntake(int dir){
-/*	if(dir == 1){
-		intakeVelTarget = 300;
-	}
-	else if(dir == 2 || dir == -1){
-		intakeVelTarget = -100;
-	}
-	else if(dir == 0){
-		intakeVelTarget = 0;
-	}*/
-
-}
-
 void setLift(int height){
 	liftTarget = height;
+}
+
+int getLift(){
+	return liftTarget;
 }

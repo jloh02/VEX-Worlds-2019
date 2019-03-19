@@ -16,10 +16,21 @@
  * task, not resume it from where it left off.
  */
 
-#define liftScorePosition 250
-#define liftUpPosition 30
+#define liftScorePosition 570
+#define liftUpPosition 60
 #define liftDownPosition 0
 #define liftPushPosition 100
+
+#define poleAlignPower 50
+#define lowerLiftDelay 200
+#define backOutTime 300
+#define backOutPower 100
+
+#define pushInTime 300
+#define pushInPower 80
+#define backOutTime2 300
+#define backOutDelay 300
+#define backOutPower2 80
 
 void opcontrol() {
   Motor FL (FLport);
@@ -27,18 +38,21 @@ void opcontrol() {
   Motor FR (FRport);
   Motor BR (BRport);
   Motor intake(intakePort);
+  Motor lift(liftPort);
 
   Controller master(E_CONTROLLER_MASTER);
 
   ADIAnalogIn cataPot(1);
   master.clear();
 
+  Task lifControl(liftControl);
   Task cataControl(catapultControl);
   Task basOdom(baseOdometry);
 
-  int liftState = 0;
   int targetIntakeSpd = 0;
   int intakeSpd = 0;
+
+  setLift(liftDownPosition);
 
 	while (true) {
     //master.print(2, 0, "Auton: %2d", autonNum);
@@ -50,9 +64,65 @@ void opcontrol() {
 
     if(master.get_digital(DIGITAL_B) == 1) clearScreen();
 
-    if(master.get_digital_new_press(DIGITAL_L1) == 1) catapultActivated = true;
-    if(master.get_digital_new_press(DIGITAL_L2) == 1) liftState = liftState==0?1:0;
-    if(master.get_digital_new_press(DIGITAL_B) == 1) liftState = liftState==2?0:2;
+    if(master.get_digital_new_press(DIGITAL_L2) == 1) catapultActivated = true;
+
+    if(master.get_digital_new_press(DIGITAL_L1) == 1) {
+      if(getLift()==liftDownPosition) setLift(liftUpPosition);
+      else setLift(liftDownPosition);
+    }
+    if(master.get_digital_new_press(DIGITAL_A) == 1) {
+      setLift(liftScorePosition);
+      while(fabs(liftScorePosition - lift.get_position()) > 5){
+        master.print(2,0,"%3f",lift.get_position());
+        FL.move(poleAlignPower);
+        BL.move(poleAlignPower);
+        FR.move(poleAlignPower);
+        BR.move(poleAlignPower);
+      }
+      int startBackOut = millis();
+      while(millis() - startBackOut < backOutTime){
+        master.print(2,0,"%3f",lift.get_position());
+        if(millis() - startBackOut >= lowerLiftDelay){
+          setLift(0);
+        }
+        FL.move(-backOutPower);
+        BL.move(-backOutPower);
+        FR.move(-backOutPower);
+        BR.move(-backOutPower);
+      }
+      setLift(0);
+    }
+    if(master.get_digital_new_press(DIGITAL_B) == 1) {
+      setLift(liftScorePosition);
+      while(fabs(liftScorePosition - lift.get_position()) > 5){
+        master.print(2,0,"%3f",lift.get_position());
+        FL.move(0);
+        BL.move(0);
+        FR.move(0);
+        BR.move(0);
+      }
+      int startPushIn = millis();
+      while(millis() - startPushIn < pushInTime){
+        FL.move(pushInPower);
+        BL.move(pushInPower);
+        FR.move(pushInPower);
+        BR.move(pushInPower);
+      }
+      setLift(0);
+      delay(backOutDelay);
+      int startBackOut = millis();
+      while(millis() - startBackOut < backOutTime2){
+        master.print(2,0,"%3f",lift.get_position());
+        FL.move(-backOutPower2);
+        BL.move(-backOutPower2);
+        FR.move(-backOutPower2);
+        BR.move(-backOutPower2);
+      }
+    };
+
+    //L1: small up down
+    //A: scoring motion
+    //B: descore
 
     if(master.get_digital_new_press(DIGITAL_LEFT)) autonomous();
 

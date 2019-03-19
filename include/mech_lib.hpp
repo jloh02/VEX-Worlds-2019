@@ -7,5 +7,6 @@ void liftControl(void * ignore);
 
 void setIntake(int dir);
 void setLift(int height);
+int getLift();
 
 #endif
