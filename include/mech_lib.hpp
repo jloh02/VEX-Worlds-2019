@@ -3,10 +3,13 @@
 
 void catapultControl(void * ignore);
 void liftControl(void * ignore);
+void pusherControl(void * ignore);
 //void intakeControl(void * ignore);
 
-void setIntake(int dir);
+//void setIntake(int dir);
 void setLift(int height);
 int getLift();
+
+void setPusher(int height);
 
 #endif

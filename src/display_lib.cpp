@@ -7,26 +7,15 @@ lv_obj_t * title;
 /*
 static lv_res_t setAuton(lv_obj_t * btn){
   uint8_t id = lv_obj_get_free_num(btn);
-
   autonNum = id>5?id-5:id;
-  //------------- AUTONOMOUS ROUTINES ------------//
-  // 1: Front tile, side and mid pole (17)        //
-  // 2: Front tile, opponent and mid pole (12)    //
-  // 3: Back tile, side pole and park (13)        //
-  // 4: Back tile, pole cap, floor cap, park (13) //
-  // 999: Skills                                    //
-  // 1-5 for RED, 6-10 for BLUE                   //
-  //----------------------------------------------//
-
   return LV_RES_OK;
-}
-*/
+}*/
 
 using namespace std;
 
 static const char * btnm_map[] = {"1", "2", "3", "4", "5", ""};
 static const string display_map[] =
-{"1 Red","2 Red","3 Red","4 Red","5 Red","1 Blue","2 Blue","3 Blue","4 Blue","5 Blue"};
+{"Std Red","2 Red","3 Red","4 Red","5 Red","Std Blue","2 Blue","3 Blue","4 Blue","5 Blue"};
 
 /*Called when a button is released ot long pressed*/
 static lv_res_t btnm_action_red(lv_obj_t * btnm, const char *txt)

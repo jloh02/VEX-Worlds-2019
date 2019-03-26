@@ -1,26 +1,16 @@
-#include "main.h"
-#include "base_lib.hpp"
-#include "mech_lib.hpp"
+#include "auton_sets.hpp"
 
-/*
-prosv5 b
-prosv5 u
-*/
-
-/**
- * Runs the user autonomous code. This function will be started in its own task
- * with the default priority and stack size whenever the robot is enabled via
- * the Field Management System or the VEX Competition Switch in the autonomous
- * mode. Alternatively, this function may be called in initialize or opcontrol
- * for non-competition testing purposes.
- *
- * If the robot is disabled or communications is lost, the autonomous task
- * will be stopped. Re-enabling the robot will restart the task, not re-start it
- * from where it left off.
- */
+//------------- AUTONOMOUS ROUTINES ------------//
+// 1: Front tile, side and mid pole (16)        //
+// 2: Front tile, opponent and mid pole (12)    //
+// 3: Back tile, side pole and park (13)        //
+// 4: Back tile, pole cap, floor cap, park (13) //
+// 5: Get ball under cap (1)                    //
+// 1-5 for RED, 6-10 for BLUE                   //
+//----------------------------------------------//
 
 void autonomous() {
-  Motor intake(intakePort);
+
 
   double start = millis();
   Task cataControl(catapultControl);
@@ -28,21 +18,23 @@ void autonomous() {
   Task basOdometry(baseOdometry);
   Task basMotorControl(baseMotorControl);
   Task lifControl(liftControl);
-  
-  baseMove(300,0.28,1.4);
-  waitBase(1100);
-  delay(500);
-  intake.move(-42);
-  baseMove(-90,0.9,0.8);
-  waitBase(1000);
-  //delay(150);
-  intake.move(0);
-  delay(350);
-  intake.move(100);
-  baseMove(-150,0.63,1.4);
-  //delay(100);
-  //intake.move(100);
-  waitBase(1000);
-  delay(1000);
-  intake.move(0);
+  Task pushControl(pusherControl);
+
+  resetCoord(0, 0, 0);
+
+  autonNum = 6;
+  switch(autonNum){
+    case 1:
+      basicRed();
+      break;
+    case 2:
+      oppRed();
+      break;
+    case 6:
+      basicBlue();
+      break;
+    case 7:
+      oppBlue();
+      break;
+  }
 }

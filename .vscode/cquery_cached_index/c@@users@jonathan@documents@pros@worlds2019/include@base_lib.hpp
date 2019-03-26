@@ -8,7 +8,7 @@ void baseControl(void * ignore);      //Motor control using PD Loop
 
 void waitBase(double cutoff);            //While loop to wait for base to finish
 
-//Straight moves
+//Straight moves in inches
 void baseMove(double dis);  //Default PD
 void baseMove(double dis, double p, double d);
 
@@ -27,6 +27,8 @@ void baseTurnRelative(double angle, double p, double d);
 //Turning towards point using global angle
 void baseTurn(double x, double y);
 void baseTurn(double x, double y, double p, double d);
+void baseTurn(double x, double y, bool inverted);
+void baseTurn(double x, double y, double p, double d, bool inverted);
 
 void resetCoord(double x, double y, double angleInDeg);
 
