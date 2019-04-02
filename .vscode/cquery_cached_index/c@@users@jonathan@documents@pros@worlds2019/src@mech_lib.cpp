@@ -48,13 +48,13 @@ void catapultControl(void * ignore){
 					//catapultR.move(70);
           delay(25);
         }
-        while(cataPot.get_value() < catapultShootAngle) {
+        /*while(cataPot.get_value() < catapultShootAngle) {
 					//master.print(2, 0, "%4d Waiting...", cataPot.get_value());
           catapult.move_relative(0,100);
 					//catapultR.move_relative(0,100);
           delay(25);
         }
-				delay(150);
+				delay(150);*/
   			catapultActivated = false;
 			}
 			else{
