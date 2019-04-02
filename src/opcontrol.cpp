@@ -22,8 +22,8 @@
  // B: Auto cap descore
  // X: Hold to stop lift
  // Y:
- // UP: Pusher
- // DOWN: Pusher
+ // UP:
+ // DOWN:
  // LEFT:
  // RIGHT:
  // L1: Cap intake up/down
@@ -32,9 +32,8 @@
 
 #define liftScorePosition 535
 #define liftDescorePosition 525
-#define liftUpPosition 60
+#define liftUpPosition 120
 #define liftDownPosition 0
-#define liftPushPosition 100
 
 #define poleAlignPower 50
 #define lowerLiftDelay 200
@@ -64,12 +63,16 @@ void opcontrol() {
 
   Task lifControl(liftControl);
   Task cataControl(catapultControl);
-  Task basOdom(baseOdometry);
+  Task intControl(intakeControl);
+  //Task pushControl(pusherControl);
+
+  //Task basOdom(baseOdometry);
 
   int targetIntakeSpd = 0;
   int intakeSpd = 0;
 
   setLift(liftDownPosition);
+  setPusher(20);
 
 	while (true) {
     //master.print(2, 0, "Auton: %2d", autonNum);
@@ -143,6 +146,7 @@ void opcontrol() {
     else intakeSpd = targetIntakeSpd;
 
     intake.move(intakeSpd);
+    //setIntake((master.get_digital(DIGITAL_R1)*2));
 
     pusher.move((master.get_digital(DIGITAL_UP)-master.get_digital(DIGITAL_DOWN))*120);
 		FL.move(left-2);
@@ -153,29 +157,3 @@ void opcontrol() {
 		delay(5);
 	}
 }
-
-/*
-if(master.get_digital_new_press(DIGITAL_A) == 1) {
-  liftL.move_absolute(liftScorePosition, 200);
-  liftR.move_absolute(liftScorePosition, 200);
-  while(fabs(liftScorePosition - liftL.get_position()) > 5){
-    master.print(2,0,"%3f",liftL.get_position());
-    FL.move(poleAlignPower);
-    BL.move(poleAlignPower);
-    FR.move(poleAlignPower);
-    BR.move(poleAlignPower);
-  }
-  int startBackOut = millis();
-  while(millis() - startBackOut < backOutTime){
-    master.print(2,0,"%3f",liftL.get_position());
-    if(millis() - startBackOut >= lowerLiftDelay){
-      liftL.move_absolute(liftDownPosition, 200);
-      liftR.move_absolute(liftDownPosition, 200);
-    }
-    FL.move(-backOutPower);
-    BL.move(-backOutPower);
-    FR.move(-backOutPower);
-    BR.move(-backOutPower);
-  }
-  liftState = 0;
-}*/

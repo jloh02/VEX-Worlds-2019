@@ -3,20 +3,20 @@
 
 //Inertia after power: ____
 
-//double intakeVelTarget = 0;
+int numBall = 0;
+int intakeBallTarget = 0;
 int liftTarget = 0;
 int pusherTarget = 0;
 
-#define catapultReadyAngle 1600
+#define catapultReadyAngle 1570
 #define catapultShootAngle 2450
-#define minFireTime 100
+#define minFireTime 150
 
-#define liftP 2.5
-#define liftD 0.7
-#define pushP 2.5
-#define pushD 0.0
+#define liftP 2.2
+#define liftD 1.0
+#define pushP 2.3
+#define pushD 0.3
 
-#define intakeP 0.35
 
 /*
 Motor liftL (liftLPort);
@@ -112,4 +112,30 @@ void pusherControl(void * ignore){
 }
 void setPusher(int height){
 	pusherTarget = -height;
+}
+
+void intakeControl(void * ignore){
+	Motor intake(intakePort);
+	Vision vis (visionPort);
+  vis.clear_led();
+	Vision::print_signature(vis.get_signature(1));
+	bool ballPresent = false;
+	 while (true) {
+	  vision_object_s_t obj = vis.get_by_sig(0,1);
+		printf("%d\n",obj.width);
+		if(obj.width>=150) {
+			ballPresent = true;
+		}
+		else{
+			if(ballPresent) numBall++;
+			ballPresent = false;
+		}
+		if(numBall<intakeBallTarget) intake.move(100);
+		else intake.move(0);
+    delay(25);
+  }
+}
+
+void setIntake(int targetBalls){
+	intakeBallTarget = targetBalls;
 }

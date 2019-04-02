@@ -7,20 +7,16 @@
 // 4: Back tile, pole cap, floor cap, park (13) //
 // 5: Get ball under cap (1)                    //
 // 1-5 for RED, 6-10 for BLUE                   //
+// 999: Skills                                  //
 //----------------------------------------------//
 
 void autonomous() {
-
-
-  double start = millis();
   Task cataControl(catapultControl);
   Task basControl(baseControl);
   Task basOdometry(baseOdometry);
   Task basMotorControl(baseMotorControl);
   Task lifControl(liftControl);
   Task pushControl(pusherControl);
-
-  resetCoord(0, 0, 0);
 
   autonNum = 6;
   switch(autonNum){

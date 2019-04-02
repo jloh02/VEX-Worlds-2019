@@ -15,7 +15,7 @@ using namespace std;
 
 static const char * btnm_map[] = {"1", "2", "3", "4", "5", ""};
 static const string display_map[] =
-{"Std Red","2 Red","3 Red","4 Red","5 Red","Std Blue","2 Blue","3 Blue","4 Blue","5 Blue"};
+{"Std Red","Opp Red","3 Red","4 Red","5 Red","Std Blue","Opp Blue","3 Blue","4 Blue","5 Blue"};
 
 /*Called when a button is released ot long pressed*/
 static lv_res_t btnm_action_red(lv_obj_t * btnm, const char *txt)
