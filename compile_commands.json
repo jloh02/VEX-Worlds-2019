@@ -203,11 +203,11 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "bin/auton_sets.cpp.o",
-            "src\\auton_sets.cpp"
+            "bin/mech_lib.cpp.o",
+            "src\\mech_lib.cpp"
         ],
         "directory": "C:\\Users\\Jonathan\\Documents\\PROS\\Worlds2019",
-        "file": "src\\auton_sets.cpp"
+        "file": "src\\mech_lib.cpp"
     },
     {
         "arguments": [
@@ -238,10 +238,10 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "bin/mech_lib.cpp.o",
-            "src\\mech_lib.cpp"
+            "bin/auton_sets.cpp.o",
+            "src\\auton_sets.cpp"
         ],
         "directory": "C:\\Users\\Jonathan\\Documents\\PROS\\Worlds2019",
-        "file": "src\\mech_lib.cpp"
+        "file": "src\\auton_sets.cpp"
     }
 ]

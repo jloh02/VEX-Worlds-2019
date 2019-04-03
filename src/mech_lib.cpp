@@ -8,7 +8,7 @@ int intakeBallTarget = 0;
 int liftTarget = 0;
 int pusherTarget = 0;
 
-#define catapultReadyAngle 1570
+#define catapultReadyAngle 1550
 #define catapultShootAngle 2450
 #define minFireTime 150
 

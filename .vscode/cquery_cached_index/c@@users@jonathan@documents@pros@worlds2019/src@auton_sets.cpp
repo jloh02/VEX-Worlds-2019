@@ -1,13 +1,8 @@
 #include "auton_sets.hpp"
-void basicRed(){
 
-}
-
-void basicBlue(){
-  double autonStart = millis();
-  resetCoord(0, 0, -117);
-
+void redCore(){
   Motor intake(intakePort);
+  resetCoord(0, 0, 117);
 
   setPusher(275);   //Setup movement
   baseMove(15.0, 0.6, 1.2); //Move forward to collect ball
@@ -21,33 +16,72 @@ void basicBlue(){
   waitBase(1000);
   setPusher(80);  //Pusher in position to hit low flag
   delay(500);
-  baseTurn(7,0.4,0.7);
+
+  baseTurn(-7,0.4,0.7);  //Turn to face low flags
   waitBase(1200);
-  //'delay(300);
-  baseMove(46,0.37,1.5);
+  baseMove(46,0.37,1.5);  //Score low flags
   waitBase(1500);
-  baseMove(-52,0.4,1.5);
+  baseMove(-52,0.4,1.5);  //Return to shooting position
   waitBase(1500);
-  baseTurn(-6, 0.5,0.4);
+  baseTurn(6, 0.5,0.4);  //Turn to face high flags
   waitBase(1000);
-  catapultActivated=true;
+  catapultActivated = true; //Score 2 high flags
   intake.move(0);
   delay(300);
 
-  /*delay(400);   //Wait for ball to settle
-  baseTurn(0, 0.7, 0.7);    //Turn to shoot
+  setPusher(250);   //Pusher in position to get balls from cap
+  baseMove(3,0.7,0.7);    //Position to get good angle to get balls from cap
+  waitBase(1500);
+  baseTurn(22, 24.5, 0.7, 0.7);   //Face cap
   waitBase(1000);
-  baseMove(-5,0.5,0.5);     //Move back to get better shooting angle
+  baseMove(24, 0.45, 1.2);  //Move towards cap
+  waitBase(1100);
+  setPusher(387);
+  delay(100);
+  baseMove(-7,0,0.7,1.0);   //Flip cap
+  delay(75);
+  intake.move(100);
+  waitBase(1000);
+  baseMove(8.5,0.7,1.0);    //Collect balls from cap
   waitBase(1000);
   delay(200);
-  intake.move(0);
-  catapultActivated = true;   //Shoot side flags
-  delay(250);*/
 
-  //baseMove(0,4.3,0.6,1.3);
-  //waitBase(600);
-  setPusher(250);
-  baseMove(3,0.7,0.7);
+  baseMove(-8.5,0.7,1.0);     //Reverse to original position
+  waitBase(1200);
+  setPusher(80);
+}
+
+void blueCore(){
+  Motor intake(intakePort);
+  resetCoord(0, 0, -117);
+
+  setPusher(275);   //Setup movement
+  baseMove(15.0, 0.6, 1.2); //Move forward to collect ball
+  waitBase(1000);
+  setPusher(380);   //Collapse pusher over ball
+  intake.move(100);
+  delay(200);
+  baseMove(-15.0, 0.55, 1.4);  //Move back to original position and intake ball
+  delay(100);
+  setPusher(450);
+  waitBase(1000);
+  setPusher(80);  //Pusher in position to hit low flag
+  delay(500);
+
+  baseTurn(7,0.4,0.7);  //Turn to face low flags
+  waitBase(1200);
+  baseMove(46,0.37,1.5);  //Score low flags
+  waitBase(1500);
+  baseMove(-52,0.4,1.5);  //Return to shooting position
+  waitBase(1500);
+  baseTurn(-6, 0.5,0.4);  //Turn to face high flags
+  waitBase(1000);
+  catapultActivated = true; //Score 2 high flags
+  intake.move(0);
+  delay(300);
+
+  setPusher(250);   //Pusher in position to get balls from cap
+  baseMove(3,0.7,0.7);    //Position to get good angle to get balls from cap
   waitBase(1500);
   baseTurn(-22, 24.5, 0.7, 0.7);   //Face cap
   waitBase(1000);
@@ -55,53 +89,61 @@ void basicBlue(){
   waitBase(1100);
   setPusher(387);
   delay(100);
-  baseMove(-7,0,0.7,1.0); //Flip cap
+  baseMove(-7,0,0.7,1.0);   //Flip cap
   delay(75);
   intake.move(100);
   waitBase(1000);
-  baseMove(8.5,0.7,1.0);     //Collect balls from cap
+  baseMove(8.5,0.7,1.0);    //Collect balls from cap
   waitBase(1000);
   delay(200);
 
   baseMove(-8.5,0.7,1.0);     //Reverse to original position
   waitBase(1200);
   setPusher(80);
-  baseTurn(-92,0.7,0.7);
+}
+
+void basicRed(){
+  Motor intake(intakePort);
+  double autonStart = millis();
+
+  redCore();
+
+  baseTurn(92,0.7,0.7);      //Turn to get to position to hit mid flags
   waitBase(2000);
-  baseMove(24,0.7,1.3);
+  baseMove(24,0.7,1.3);       //Position to hit mid flags
   waitBase(2000);
   intake.move(0);
-  baseTurnRelative(62,0.75,0.7);
+  baseTurnRelative(-62,0.75,0.7);    //Face mid flags
   waitBase(1200);
-  baseMove(-5,0.7,0.7);
+  baseMove(-5,0.7,0.7);       //Reverse to get better shooting arc
   waitBase(800);
-  while(millis()-autonStart < 14800) {intake.move(100); delay(25);}
+  while(millis()-autonStart < 14800) {intake.move(100); delay(25);}  //Waste time until last second
   baseMove(0,0,0);
   intake.move(0);
-  catapultActivated = true;
+  catapultActivated = true;   //Shoot mid flags
   delay(200);
-  /*baseTurn(10,0.55,0.7);    //Face side low flag
-  waitBase(1000);
+}
+
+void basicBlue(){
+  double autonStart = millis();
+  Motor intake(intakePort);
+
+  blueCore();
+
+  baseTurn(-92,0.7,0.7);      //Turn to get to position to hit mid flags
+  waitBase(2000);
+  baseMove(24,0.7,1.3);       //Position to hit mid flags
+  waitBase(2000);
   intake.move(0);
-  baseMove(44,0.55,1.3);  //Score low flag
-  waitBase(1000);
-
-  baseMove(-24,0.6,1.3);    //Position to shoot middle flags
-  waitBase(1000);
-  baseTurnRelative(45,0.65,0.7);
-  waitBase(1000);
-  baseMove(-32,0.7,1.3);
-  waitBase(1500);
-  delay(100);
-
-  baseTurn(-50,68,0.6,0.7); //Aim middle flags
+  baseTurnRelative(62,0.75,0.7);    //Face mid flags
+  waitBase(1200);
+  baseMove(-5,0.7,0.7);       //Reverse to get better shooting arc
   waitBase(800);
-  //delay(300);
-  while(millis()-autonStart < 14800) {intake.move(100); delay(25);}
+  while(millis()-autonStart < 14800) {intake.move(100); delay(25);}  //Waste time until last second
+  baseMove(0,0,0);
   intake.move(0);
-  catapultActivated = true;   //Shoot side flags
-  delay(200);*/
-
+  catapultActivated = true;   //Shoot mid flags
+  delay(200);
 }
 
 void oppRed(){
