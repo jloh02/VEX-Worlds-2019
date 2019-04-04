@@ -63,7 +63,6 @@ void opcontrol() {
 
   Task lifControl(liftControl);
   Task cataControl(catapultControl);
-  Task intControl(intakeControl);
   //Task pushControl(pusherControl);
 
   //Task basOdom(baseOdometry);
@@ -146,7 +145,6 @@ void opcontrol() {
     else intakeSpd = targetIntakeSpd;
 
     intake.move(intakeSpd);
-    //setIntake((master.get_digital(DIGITAL_R1)*2));
 
     pusher.move((master.get_digital(DIGITAL_UP)-master.get_digital(DIGITAL_DOWN))*120);
 		FL.move(left-2);

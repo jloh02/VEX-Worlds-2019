@@ -18,7 +18,10 @@ void autonomous() {
   Task lifControl(liftControl);
   Task pushControl(pusherControl);
 
-  autonNum = 6;
+  resetCoord(0,0,0);
+  baseMove(46,0.52,0.9);
+  delay(1000);
+  autonNum = 0;
   switch(autonNum){
     case 1:
       basicRed();
