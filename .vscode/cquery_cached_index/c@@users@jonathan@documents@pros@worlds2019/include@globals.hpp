@@ -5,17 +5,17 @@ extern int autonNum;
 //extern bool catapultReady;
 extern bool catapultActivated;
 
-#define FLport 7
-#define FRport 9
+#define FLport 9
+#define FRport 10
 #define BLport 11
-#define BRport 12
-#define liftPort 10
-#define intakePort 8
-#define catapultPort 20
-#define pusherPort 19
+#define BRport 2
+#define liftPort 20
+#define intakePort 19
+#define catapultPort 17
+#define pusherPort 18
 
 #define visionPort 6
 
-#define catapultPotPort 1
+#define catapultPotPort 8
 
 #endif

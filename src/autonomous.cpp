@@ -18,10 +18,12 @@ void autonomous() {
   Task lifControl(liftControl);
   Task pushControl(pusherControl);
 
-  resetCoord(0,0,0);
-  baseMove(46,0.52,0.9);
-  delay(1000);
-  autonNum = 0;
+	Motor lift (liftPort);
+  lift.tare_position();
+  Motor pusher (pusherPort);
+  pusher.tare_position();
+  
+  autonNum = 6;
   switch(autonNum){
     case 1:
       basicRed();

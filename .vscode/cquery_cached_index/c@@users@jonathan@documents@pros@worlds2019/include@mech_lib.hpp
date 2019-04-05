@@ -11,5 +11,6 @@ void pusherControl(void * ignore);
 void setLift(int height);
 int getLift();
 void setPusher(int height);
+void pausePusher(bool pause);
 
 #endif

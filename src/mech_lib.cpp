@@ -3,17 +3,18 @@
 
 //Inertia after power: ____
 
-int numBall = 0;
-int intakeBallTarget = 0;
+//int numBall = 0;
+//int intakeBallTarget = 0;
 int liftTarget = 0;
 int pusherTarget = 0;
+bool pusherPause = false;
 
-#define catapultReadyAngle 1520
+#define catapultReadyAngle 1540
 #define catapultShootAngle 2450
 #define minFireTime 150
 
-#define liftP 2.2
-#define liftD 1.0
+#define liftP 1.0
+#define liftD 0.0
 #define pushP 2.3
 #define pushD 0.3
 
@@ -64,7 +65,7 @@ void catapultControl(void * ignore){
 				//catapultL.move_relative(0,100);
 			}
 		}
-		delay(25);
+		delay(10);
 	}
 }
 
@@ -72,7 +73,6 @@ void liftControl(void * ignore){
 	Controller master(E_CONTROLLER_MASTER);
 	Motor lift (liftPort);
 	int oldErr = 0;
-  lift.tare_position();
 
 	while(true){
 		int error = liftTarget - lift.get_position();
@@ -98,20 +98,24 @@ int getLift(){
 void pusherControl(void * ignore){
 	Motor pusher (pusherPort);
 	int oldErr = 0;
-  pusher.tare_position();
 
-	while(competition::is_autonomous()){
+	while(true){
 		int error = pusherTarget - pusher.get_position();
 		int power = error*pushP + (error-oldErr)*pushD;
 		oldErr = error;
 
-		pusher.move(power);
+		if(!pusherPause) pusher.move(power);
+		else pusher.move(0);
 
 		delay(25);
 	}
 }
 void setPusher(int height){
 	pusherTarget = -height;
+}
+
+void pausePusher(bool pause){
+	pusherPause = pause;
 }
 
 /*

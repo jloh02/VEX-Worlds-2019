@@ -63,7 +63,7 @@ void opcontrol() {
 
   Task lifControl(liftControl);
   Task cataControl(catapultControl);
-  //Task pushControl(pusherControl);
+  Task pushControl(pusherControl);
 
   //Task basOdom(baseOdometry);
 
@@ -71,7 +71,7 @@ void opcontrol() {
   int intakeSpd = 0;
 
   setLift(liftDownPosition);
-  setPusher(20);
+  setPusher(80);
 
 	while (true) {
     //master.print(2, 0, "Auton: %2d", autonNum);
@@ -88,6 +88,7 @@ void opcontrol() {
       else setLift(liftDownPosition);
     }
     if(master.get_digital_new_press(DIGITAL_A) == 1) {
+      pausePusher(true);
       setLift(liftScorePosition);
       while(fabs(liftScorePosition - lift.get_position()) > 5){
         master.print(2,0,"%3f",lift.get_position());
@@ -110,6 +111,7 @@ void opcontrol() {
       setLift(0);
     }
     if(master.get_digital_new_press(DIGITAL_B) == 1) {
+      pausePusher(true);
       setLift(liftDescorePosition);
       while(fabs(liftDescorePosition - lift.get_position()) > 5){
         master.print(2,0,"%3f",lift.get_position());
@@ -146,12 +148,14 @@ void opcontrol() {
 
     intake.move(intakeSpd);
 
-    pusher.move((master.get_digital(DIGITAL_UP)-master.get_digital(DIGITAL_DOWN))*120);
+    //pusher.move((master.get_digital(DIGITAL_UP)-master.get_digital(DIGITAL_DOWN))*120);
 		FL.move(left-2);
 		BL.move(left+2);
 		FR.move(right-2);
 		BR.move(right+2);
 
+    pausePusher(false);
+    
 		delay(5);
 	}
 }
