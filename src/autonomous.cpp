@@ -27,7 +27,7 @@ void autonomous() {
   //resetCoord(0,0,0);
   //baseMove(40,0.52,0.9);
   //waitBase(10000);
-
+  autonNum = 1;
   switch(autonNum){
     case 1:
       basicRed();
