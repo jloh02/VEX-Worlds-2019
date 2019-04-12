@@ -2,9 +2,11 @@
 
 void redCore(){
   Motor intake(intakePort);
-  resetCoord(0, 0, 116.5);
+  resetCoord(0, 0, 90);
 
   setPusher(275);   //Setup movement
+  baseTurn(116.5, 0.62, 0.2);  //Turn to face ball on platform
+  waitBase(600);
   baseMove(14,0.5,1.3); //Move forward to collect ball
   waitBase(800);
   setPusher(370);   //Collapse pusher over ball
@@ -60,9 +62,11 @@ void redCore(){
 
 void blueCore(){
   Motor intake(intakePort);
-  resetCoord(0, 0, -116.5);
+  resetCoord(0, 0, -90);
 
   setPusher(275);   //Setup movement
+  baseTurn(-116.5, 0.62, 0.2);  //Turn to face ball on platform
+  waitBase(600);
   baseMove(14,0.5,1.3); //Move forward to collect ball
   waitBase(800);
   setPusher(370);   //Collapse pusher over ball
