@@ -11,7 +11,7 @@ Motor BR (BRport);
 /*-----------------------------------------USER INPUT-----------------------------------------*/
 #define baseRPM 200									//Enter RPM of base motors
 #define UNLIMITED_POWER 100         //Enter maximum power of base motors
-#define rampingPow 9              //Increase in power / 25 millis
+#define rampingPow 8              	//Increase in power / 25 millis
 
 #define PI      3.141592653589793238462643383279			//CONST PI VALUE
 #define halfPI  1.570796326794896619231321691639 			//CONST PI/2 VALUE
@@ -106,7 +106,7 @@ void baseMotorControl(void * ignore){
 
 		//printf("%4.0f \t %4.0f\n",powerL,powerR);
 
-    Task::delay(25);
+    Task::delay(15);
   }
 }
 
@@ -127,7 +127,7 @@ void baseControl(void * ignore){
 
 		//printf("Motor controlling %f",motorTargetL);
 
-    Task::delay(25);
+    Task::delay(15);
   }
 }
 
@@ -216,8 +216,12 @@ void baseTurn(double x, double y, double p, double d){
 
 void baseTurn(double x, double y, double p, double d, bool inverted){
 	double targAngle = atan2((x-position.x),(y-position.y));
-	if(inverted) targAngle *= -1;
-  double diff = (targAngle - position.angle + lastResetAngle)*baseWidth/inPerDeg/2;
+	printf("HI: %f\n",targAngle);
+	if(inverted) targAngle += PI;
+	printf("HI: %f\n",targAngle);
+	if(targAngle-position.angle > PI) targAngle -= twoPI;
+	printf("HI: %f\n",targAngle);
+  double diff = (targAngle - position.angle)*baseWidth/inPerDeg/2;
   targetL += diff;
   targetR += -diff;
   kP = p;
@@ -245,4 +249,8 @@ void resetCoord(double x, double y, double angleInDeg){
 
 	targetL = 0;
 	targetR = 0;
+}
+
+double getY(){
+	return position.y;
 }

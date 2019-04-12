@@ -11,6 +11,7 @@ bool catapultActivated = false;
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
+
 	initSelector();
 
 	Motor FL (FLport, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_DEGREES);
@@ -23,6 +24,10 @@ void initialize() {
 	Motor pusher(pusherPort, E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_DEGREES);
 	//Motor catapultL(catapultLPort, E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_DEGREES);
 	//Motor catapultR(catapultRPort, E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_DEGREES);
+
+	ADIAnalogIn cataPot(catapultPotPort);
+	delay(200);
+
 	lift.tare_position();
   pusher.tare_position();
 }

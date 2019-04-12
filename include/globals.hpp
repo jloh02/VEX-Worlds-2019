@@ -2,7 +2,7 @@
 #define _GLOBALS_HPP_
 
 extern int autonNum;
-//extern bool catapultReady;
+extern bool catapultReady;
 extern bool catapultActivated;
 
 #define FLport 9
@@ -17,5 +17,6 @@ extern bool catapultActivated;
 #define visionPort 6
 
 #define catapultPotPort 8
+#define gyroPort 2
 
 #endif

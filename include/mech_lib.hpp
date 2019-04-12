@@ -10,7 +10,9 @@ void pusherControl(void * ignore);
 //void setIntake(int targetBalls);
 void setLift(int height);
 int getLift();
-void setPusher(int height);
+void setPusher(double height);
 void pausePusher(bool pause);
+void setClimb(bool climbing);
+void pauseLift(bool pause);
 
 #endif

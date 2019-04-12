@@ -30,8 +30,8 @@
  // L2: Catapult
  // R1/2: Intake
 
-#define liftScorePosition 535
-#define liftDescorePosition 525
+#define liftScorePosition 515
+#define liftDescorePosition 544
 #define liftUpPosition 120
 #define liftDownPosition 0
 
@@ -40,12 +40,12 @@
 #define backOutTime 300
 #define backOutPower 100
 
-#define pushInDelay 100
+#define pushInDelay 0
 #define pushInTime 500
-#define pushInPower 30
+#define pushInPower 50
 #define pushIn2Time 200
 #define pushIn2Power 80
-#define descoreDelay 100
+#define descoreDelay 80
 
 void opcontrol() {
   Motor FL (FLport);
@@ -65,14 +65,12 @@ void opcontrol() {
   Task cataControl(catapultControl);
   Task pushControl(pusherControl);
 
-  //Task basOdom(baseOdometry);
+  Task basOdom(baseOdometry);
 
   int targetIntakeSpd = 0;
   int intakeSpd = 0;
 
   setLift(liftDownPosition);
-  setPusher(80);
-
 	while (true) {
     //master.print(2, 0, "Auton: %2d", autonNum);
     //master.print(2, 0, "Pot: %4d", cataPot.get_value());
@@ -90,7 +88,8 @@ void opcontrol() {
     if(master.get_digital_new_press(DIGITAL_A) == 1) {
       pausePusher(true);
       setLift(liftScorePosition);
-      while(fabs(liftScorePosition - lift.get_position()) > 5){
+      double startScore = millis();
+      while(fabs(liftScorePosition - lift.get_position()) > 5 && millis()-startScore<1300){
         master.print(2,0,"%3f",lift.get_position());
         FL.move(poleAlignPower);
         BL.move(poleAlignPower);
@@ -111,7 +110,7 @@ void opcontrol() {
       setLift(0);
     }
     if(master.get_digital_new_press(DIGITAL_B) == 1) {
-      pausePusher(true);
+      setPusher(25);
       setLift(liftDescorePosition);
       while(fabs(liftDescorePosition - lift.get_position()) > 5){
         master.print(2,0,"%3f",lift.get_position());
@@ -139,6 +138,59 @@ void opcontrol() {
       delay(descoreDelay);
     };
 
+    if(master.get_digital_new_press(DIGITAL_Y) == 1) {
+    	Motor pusher (pusherPort);
+      setLift(275);
+      FL.tare_position();
+    	FR.tare_position();
+    	BL.tare_position();
+    	BR.tare_position();
+      while(BL.get_position()>-15 && BR.get_position()>-15){
+        FL.move(-70);
+        BL.move(-70);
+        FR.move(-70);
+        BR.move(-70);
+        delay(25);
+      }
+      FL.move_relative(0, 100);
+    	BL.move_relative(0, 100);
+    	FR.move_relative(0, 100);
+    	BR.move_relative(0, 100);
+
+      setClimb(true);
+      pauseLift(true);
+      //printf("%f\n",pusher.get_position());
+      while(pusher.get_position() > -670) {
+        FL.move(0);
+        BL.move(0);
+        FR.move(0);
+        BR.move(0);
+        delay(25);
+      }
+      delay(200);
+      FL.tare_position();
+    	FR.tare_position();
+    	BL.tare_position();
+    	BR.tare_position();
+      double startClimb = millis();
+      while(BL.get_position()<2200 && BR.get_position()<2200){
+        if(millis()-startClimb< 2000){
+          setClimb(false);
+          pausePusher(true);
+        }
+        FL.move(120);
+        BL.move(120);
+        FR.move(120);
+        BR.move(120);
+        printf("%f \t %f\n",BL.get_actual_velocity(),FL.get_actual_velocity());
+        delay(25);
+      }
+      FL.move_relative(0, 100);
+    	BL.move_relative(0, 100);
+    	FR.move_relative(0, 100);
+    	BR.move_relative(0, 100);
+    };
+
     targetIntakeSpd = master.get_digital(DIGITAL_R1)*100-master.get_digital(DIGITAL_R2)*100;
     //targetIntakeSpd*=-1;
 
@@ -154,8 +206,10 @@ void opcontrol() {
 		FR.move(right-2);
 		BR.move(right+2);
 
+    setPusher(80);
     pausePusher(false);
-    
+    setClimb(false);
+
 		delay(5);
 	}
 }

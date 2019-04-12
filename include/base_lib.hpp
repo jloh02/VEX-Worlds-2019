@@ -32,4 +32,6 @@ void baseTurn(double x, double y, double p, double d, bool inverted);
 
 void resetCoord(double x, double y, double angleInDeg);
 
+double getY();
+
 #endif

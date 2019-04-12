@@ -12,4 +12,6 @@ void oppBlue();
 void backRed();
 void backBlue();
 
+void redCore(); //For skills
+
 #endif

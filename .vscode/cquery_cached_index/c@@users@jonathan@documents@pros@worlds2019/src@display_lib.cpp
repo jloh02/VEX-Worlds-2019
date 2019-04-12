@@ -1,4 +1,5 @@
 #include <string>
+#include <fstream>
 #include "main.h"
 
 lv_obj_t * title;
@@ -13,9 +14,16 @@ static lv_res_t setAuton(lv_obj_t * btn){
 
 using namespace std;
 
-static const char * btnm_map[] = {"1", "2", "3", "4", "5", ""};
+static const char * btnm_map[] = {"1", "2", "3", "4", "S", ""};
 static const string display_map[] =
-{"Std Red","Opp Red","3 Red","4 Red","5 Red","Std Blue","Opp Blue","3 Blue","4 Blue","5 Blue"};
+{"Std Red","Opp Red","3 Red","4 Red","Real Skills","Std Blue","Opp Blue","3 Blue","4 Blue","Low Skills"};
+
+void updateFile(){
+  //ofstream select_file ("auton_selected.txt");
+  //select_file << to_string(autonNum);
+  //select_file.close();
+  //delay(100);
+}
 
 /*Called when a button is released ot long pressed*/
 static lv_res_t btnm_action_red(lv_obj_t * btnm, const char *txt)
@@ -28,6 +36,8 @@ static lv_res_t btnm_action_red(lv_obj_t * btnm, const char *txt)
 
   string output = "Auton Selected: " + display_map[autonNum-1];
   lv_label_set_text(title, output.c_str());
+  delay(100);
+  updateFile();
 
   return LV_RES_OK; /*Return OK because the button matrix is not deleted*/
 }
@@ -42,24 +52,53 @@ static lv_res_t btnm_action_blue(lv_obj_t * btnm, const char *txt)
 
   string output = "Auton Selected: " + display_map[autonNum-1];
   lv_label_set_text(title, output.c_str());
+  updateFile();
 
   return LV_RES_OK; /*Return OK because the button matrix is not deleted*/
 }
 
 lv_res_t calibSensors(lv_obj_t * btn){
-  autonNum = 999;
+  /*autonNum = 999;
 
   string output = "Auton Selected: Skills";
   lv_label_set_text(title, output.c_str());
+
+  updateFile();*/
+  lv_label_set_text(title, "Calibrating...");
+  ADIAnalogIn temp(gyroPort);
+  delay(200);
+  ADIGyro gyro(gyroPort);
+  delay(1000);
+  string output = "Auton Selected: " + display_map[autonNum-1];
+  lv_label_set_text(title, output.c_str());
+
   return LV_RES_OK; /*Return OK because the button matrix is not deleted*/
 }
+
 
 void initSelector(){
   int btnm_height = (LV_VER_RES-130)/ 2;
 
   /*Create a title label*/
 	title = lv_label_create(lv_scr_act(), NULL);
-	lv_label_set_text(title, "Auton Selected: ____");
+  lv_label_set_text(title, "Auton Selected: NULL");
+  /*ifstream select_file ("auton_selected.txt");
+  string line;
+  getline(select_file,line);
+  cout << line << endl;
+  if(line[0] != '\0'){
+    autonNum = stoi(line);
+    select_file.close();
+    if(autonNum == 999) lv_label_set_text(title, "Auton Selected: Skills");
+    else {
+      string output = "Auton Selected: " + display_map[autonNum-1];
+      lv_label_set_text(title, output.c_str());
+    }
+  }
+  else{
+    lv_label_set_text(title, "Auton Selected: NULL");
+  }*/
+
 	lv_obj_align(title, NULL, LV_ALIGN_IN_TOP_MID, 0, 15);
 
   /*Create a new style for the button matrix back ground*/
@@ -150,7 +189,7 @@ void initSelector(){
   lv_btn_set_action(calibBtn, LV_BTN_ACTION_CLICK, calibSensors);
 
   lv_obj_t * label = lv_label_create(calibBtn, NULL);
-  lv_label_set_text(label, "SKILLS CHALLENGE");
+  lv_label_set_text(label, "Calibrate Gyro");
 }
 /*
 void debugLabels(){
