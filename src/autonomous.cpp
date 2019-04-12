@@ -24,9 +24,11 @@ void autonomous() {
   Motor pusher (pusherPort);
   pusher.tare_position();
 
-  //resetCoord(0,0,0);
-  //baseMove(40,0.52,0.9);
-  //waitBase(10000);
+  /*resetCoord(0, 0, 115);
+  baseTurn(0,0.48,0.5);
+  waitBase(10000);
+  printf("FINISHED");*/
+  autonNum = 1;
 
   switch(autonNum){
     case 1:

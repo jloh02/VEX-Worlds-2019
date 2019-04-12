@@ -2,18 +2,18 @@
 
 void redCore(){
   Motor intake(intakePort);
-  resetCoord(0, 0, 116.5);
+  resetCoord(0, 0, 115);
 
   setPusher(275);   //Setup movement
-  baseMove(14,0.5,1.3); //Move forward to collect ball
-  waitBase(800);
+  baseMove(15,0.5,1.3); //Move forward to collect ball
+  waitBase(900);
   setPusher(370);   //Collapse pusher over ball
   intake.move(100);
   delay(200);
-  baseMove(-14, 0.5,1.3);  //Move back to original position and intake ball
+  baseMove(-15, 0.5,1.3);  //Move back to original position and intake ball
   delay(100);
   setPusher(450);
-  waitBase(700);
+  waitBase(800);
   setPusher(80);  //Pusher in position to hit low flag
   delay(300);
 
