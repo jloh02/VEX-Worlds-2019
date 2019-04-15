@@ -86,13 +86,13 @@ void blueCore(){
   baseTurn(5,0.45,0.25);  //Turn to face low flags
   waitBase(850);
   delay(100);
-  baseMove(46,0.64,0.2);  //Score low flags
+  baseMove(46,0.65,0.2);  //Score low flags
   waitBase(1900);
   delay(200);
   baseMove(-52,0.3,0.1);  //Return to shooting position
   waitBase(1300);
-  baseTurn(-2,1.05,0.2);  //Turn to face high flags
-  waitBase(800);
+  baseTurn(-2,1.05,0.8);  //Turn to face high flags
+  waitBase(1900);
   catapultActivated = true; //Score 2 high flags
   intake.move(0);
   delay(200);
