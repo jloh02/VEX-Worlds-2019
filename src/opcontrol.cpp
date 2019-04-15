@@ -55,6 +55,7 @@ void opcontrol() {
   Motor intake(intakePort);
   Motor lift(liftPort);
   Motor pusher(pusherPort);
+  ADIGyro gyro(gyroPort);
 
   Controller master(E_CONTROLLER_MASTER);
 
@@ -173,11 +174,19 @@ void opcontrol() {
     	BL.tare_position();
     	BR.tare_position();
       double startClimb = millis();
-      while(BL.get_position()<2200 && BR.get_position()<2200){
+      while(gyro.get_value() < 45){
         if(millis()-startClimb< 2000){
           setClimb(false);
           pausePusher(true);
         }
+        FL.move(120);
+        BL.move(120);
+        FR.move(120);
+        BR.move(120);
+        printf("%f \t %f\n",BL.get_actual_velocity(),FL.get_actual_velocity());
+        delay(25);
+      }
+      while(gyro.get_value() > 5){
         FL.move(120);
         BL.move(120);
         FR.move(120);
