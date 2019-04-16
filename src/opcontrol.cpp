@@ -76,6 +76,7 @@ void opcontrol() {
     //master.print(2, 0, "Auton: %2d", autonNum);
     //master.print(2, 0, "Pot: %4d", cataPot.get_value());
     //master.print(2, 0, "Pow: %7d", catapult.get_power());
+    printf("Gyro value : %f\n", gyro.get_value());
 
 		int left = master.get_analog(ANALOG_LEFT_Y);
 		int right = master.get_analog(ANALOG_RIGHT_Y);
@@ -141,7 +142,7 @@ void opcontrol() {
 
     if(master.get_digital_new_press(DIGITAL_Y) == 1) {
     	Motor pusher (pusherPort);
-      setLift(275);
+      setLift(0);
       FL.tare_position();
     	FR.tare_position();
     	BL.tare_position();
@@ -159,7 +160,7 @@ void opcontrol() {
     	BR.move_relative(0, 100);
 
       setClimb(true);
-      pauseLift(true);
+      //pauseLift(true);
       //printf("%f\n",pusher.get_position());
       while(pusher.get_position() > -670) {
         FL.move(0);
@@ -174,7 +175,7 @@ void opcontrol() {
     	BL.tare_position();
     	BR.tare_position();
       double startClimb = millis();
-      while(gyro.get_value() < 45){
+      while(gyro.get_value() <480){
         if(millis()-startClimb< 2000){
           setClimb(false);
           pausePusher(true);
@@ -186,7 +187,7 @@ void opcontrol() {
         printf("%f \t %f\n",BL.get_actual_velocity(),FL.get_actual_velocity());
         delay(25);
       }
-      while(gyro.get_value() > 5){
+      while(gyro.get_value() > 10){
         FL.move(120);
         BL.move(120);
         FR.move(120);
@@ -198,6 +199,7 @@ void opcontrol() {
     	BL.move_relative(0, 100);
     	FR.move_relative(0, 100);
     	BR.move_relative(0, 100);
+delay(10000);
     };
 
     targetIntakeSpd = master.get_digital(DIGITAL_R1)*100-master.get_digital(DIGITAL_R2)*100;

@@ -3,38 +3,59 @@
 void real_skills(){
   Motor intake(intakePort);
   Motor lift(liftPort);
-  resetCoord(4,-51.3 ,90);
+  Motor FL (FLport);
+  Motor BL (BLport);
+  Motor FR (FRport);
+  Motor BR (BRport);
+  resetCoord(4,-51.3,90);
 
   intake.move(100);
   setPusher(320);   //Setup movement
-  baseMove(35,0.45,1.3); //Move forward to push cap and collect ball
+  baseMove(34.5,0.35,0.1); //Move forward to push cap and collect ball
   waitBase(3000);
   delay(200);
-/*  baseMove(-10, 0.5,1.3);  //Move back to get cap
-  delay(400);
   setPusher(80);  //Pusher in position to hit low flag
-  waitBase(3000);
+  baseMove(-15, 0.62, 0.0);    // move back to position for the turn to the cap
+  waitBase(10000);
+  intake.move(0);
 
-  baseTurn(-37,0.5,0.3); //Back face cap
+  baseTurn(-50,0.5,0.15); //Back face cap
   waitBase(3000);
-  baseMove(-18, 0.5, 1.3); // Intake cap
-  waitBase(3000);
-  setLift(120);
+  timerBase(-80,-80,500);
+  pauseBase(true);
+  delay(500);
+//  baseMove(-18.5, 0.6, 0.0); // Move back to Intake cap
+
+  setLift(120);    //raise the cap
   delay(200);
-  baseMove(10, 0.6, 0.2); //Position to score on post
+pauseBase(false);
+  baseMove(5, 0.64,0.0); //Position to score on post
+  waitBase(10000);
+
+  baseTurn(-12,-56.8,0.6,0.0); //Face post
+  waitBase(10000);
+  delay(3000);
+  timerBase(50, 50, 1000);  //Pause base, move by time, unpause base
+  pauseBase(true);
+/*
+  pausePusher(true);
+  baseStraight(true);
+  baseMove(33, 0.35, 0.0);  //Move to Score cap
   waitBase(3000);
 
-  baseTurn(-90,0.6,0.2); //Face post
-  waitBase(3000);
-
-  baseMove(35, 0.5, 1.3);  //Score cap
-  delay(800);
-  setLift(515);
-  waitBase(3000);
+  pauseBase(true);    //pause the base function
+  setLift(515);   //score cap
   double startScore = millis();
-  while(fabs(515 - lift.get_position()) > 5 && millis()-startScore<1300){
-    delay(25);
+  while(fabs(515 - lift.get_position()) > 5 && millis()-startScore<1300) {
+    timerBase(50,50,25);
   }
+  timerBase(-50,-50,700); //move out from the pole
+
+  setLift(0); //put lift down
+
+  resetCoord(<x>,<y>,<angle>);
+  baseStraight(false);
+ pauseBase(false);
   baseMove(5, 0.6,0.2); //Move away from wall
   waitBase(3000);
 

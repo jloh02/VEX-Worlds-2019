@@ -28,8 +28,6 @@ void initialize() {
 	ADIAnalogIn cataPot(catapultPotPort);
 	delay(200);
 
-
-
 	lift.tare_position();
   pusher.tare_position();
 }

@@ -33,5 +33,8 @@ void baseTurn(double x, double y, double p, double d, bool inverted);
 void resetCoord(double x, double y, double angleInDeg);
 
 double getY();
+void baseStraight(bool state);
+void timerBase(double powerL, double powerR, double time);
+void pauseBase(bool pause);
 
 #endif

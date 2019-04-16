@@ -82,6 +82,10 @@ void baseOdometry(void * ignore){
 	}
 }
 
+bool basePause = false;
+void pauseBase(bool pause){
+	basePause = pause;
+}
 void baseMotorControl(void * ignore){
   double powerL=0,powerR=0;
 	//printf("Left \t Right\n");
@@ -99,15 +103,36 @@ void baseMotorControl(void * ignore){
     if(powerR > UNLIMITED_POWER) powerR = UNLIMITED_POWER;
     else if(powerR < -UNLIMITED_POWER) powerR = -UNLIMITED_POWER;
 
-		FL.move(powerL);
-		BL.move(powerL);
-		FR.move(powerR);
-		BR.move(powerR);
-
+		if(!basePause){
+			FL.move(powerL);
+			BL.move(powerL);
+			FR.move(powerR);
+			BR.move(powerR);
+		}
 		//printf("%4.0f \t %4.0f\n",powerL,powerR);
 
     Task::delay(15);
   }
+}
+
+void timerBase(double powerL, double powerR, double time){
+	double start = millis();
+	pauseBase(true);
+	FL.move(powerL);
+	BL.move(powerL);
+	FR.move(powerR);
+	BR.move(powerR);
+	while(millis()-start<time)delay(25);
+	FL.move(0);
+	BL.move(0);
+	FR.move(0);
+	BR.move(0);
+	pauseBase(false);
+}
+
+bool forceStraight = false;
+void baseStraight(bool state){
+	 forceStraight = state;
 }
 
 void baseControl(void * ignore){
@@ -116,20 +141,33 @@ void baseControl(void * ignore){
     double errorL = targetL - BL.get_position();
     double errorR = targetR - BR.get_position();
 
-    double deltaErrorL = errorL - prevErrorL;
-    double deltaErrorR = errorR - prevErrorR;
+		if(!forceStraight){
+	    double deltaErrorL = errorL - prevErrorL;
+	    double deltaErrorR = errorR - prevErrorR;
 
-    prevErrorL = errorL;
-    prevErrorR = errorR;
+	    prevErrorL = errorL;
+	    prevErrorR = errorR;
 
-    motorTargetL = kP*errorL+kD*deltaErrorL;
-    motorTargetR = kP*errorR+kD*deltaErrorR;
+	    motorTargetL = kP*errorL+kD*deltaErrorL;
+	    motorTargetR = kP*errorR+kD*deltaErrorR;
+		}
+		else{
+			double combErrorP = (errorL+errorR)/2*kP;
 
-		//printf("Motor controlling %f",motorTargetL);
+			prevErrorL = errorL;
+	    prevErrorR = errorR;
+
+			motorTargetL = errorL>0?combErrorP:-combErrorP;
+	    motorTargetR = errorR>0?combErrorP:-combErrorP;
+		}
+
+		//printf("Error: %f %f\n",errorL,errorR);
 
     Task::delay(15);
   }
 }
+
+
 
 void waitBase(double cutoff){
 	double start = millis();
