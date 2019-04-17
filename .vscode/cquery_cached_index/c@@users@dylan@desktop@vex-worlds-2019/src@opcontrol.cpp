@@ -70,7 +70,9 @@ void opcontrol() {
 
   int targetIntakeSpd = 0;
   int intakeSpd = 0;
+  bool pusherReadyToFlip = false;
 
+  setPusher(20);
   setLift(liftDownPosition);
 	while (true) {
     //master.print(2, 0, "Auton: %2d", autonNum);
@@ -197,14 +199,52 @@ void opcontrol() {
         BL.move(120);
         FR.move(120);
         BR.move(120);
-    //    printf("%f \t %f\n",BL.get_actual_velocity(),FL.get_actual_velocity());
-        delay(25);
+        //printf("%f \t %f\n",BL.get_actual_velocity(),FL.get_actual_velocity());
+        delay(100);
+      }
+      FL.move_relative(0, 80);
+    	BL.move_relative(0, 80);
+    	FR.move_relative(0, 80);
+    	BR.move_relative(0, 80);
+      setLift(20);
+      delay(1000);
+    };
+
+    if(master.get_digital_new_press(DIGITAL_X) == 1) { //Auto getting balls from the cap
+      if(!pusherReadyToFlip) {
+        setPusher(250);
+        pusherReadyToFlip = true;
+      }
+      else{
+        Motor pusher (pusherPort);
+        Motor intake (intakePort);
+        setPusher(380);
+        delay(400);
+        pausePusher(true);
+
+        FL.tare_position();
+        FR.tare_position();
+        BL.tare_position();
+        BR.tare_position();
+        double startReverse = millis();
+        while(millis()-startReverse < 3000){
+          FL.move(-70);
+          BL.move(-70);
+          FR.move(-70);
+          BR.move(-70);
+          intake.move(100);
+          delay(25);
+        }
+        pausePusher(false);
+        setPusher(20);
+        pusherReadyToFlip = false;
       }
       FL.move_relative(0, 100);
-    	BL.move_relative(0, 100);
-    	FR.move_relative(0, 100);
-    	BR.move_relative(0, 100);
-delay(10000);
+      BL.move_relative(0, 100);
+      FR.move_relative(0, 100);
+      BR.move_relative(0, 100);
+      intake.move(100);
+      pausePusher(false);
     };
 
     targetIntakeSpd = master.get_digital(DIGITAL_R1)*100-master.get_digital(DIGITAL_R2)*100;
@@ -217,15 +257,15 @@ delay(10000);
     intake.move(intakeSpd);
 
     //pusher.move((master.get_digital(DIGITAL_UP)-master.get_digital(DIGITAL_DOWN))*120);
-		FL.move(left-2);
-		BL.move(left+2);
-		FR.move(right-2);
-		BR.move(right+2);
+    FL.move(left-2);
+    BL.move(left+2);
+    FR.move(right-2);
+    BR.move(right+2);
 
-    setPusher(80);
     pausePusher(false);
     setClimb(false);
 
-		delay(5);
+    delay(5);
+
 	}
 }

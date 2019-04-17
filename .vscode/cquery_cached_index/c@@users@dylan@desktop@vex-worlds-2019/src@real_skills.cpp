@@ -11,58 +11,66 @@ void real_skills(){
 
   intake.move(100);
   setPusher(320);   //Setup movement
-  baseMove(34.5,0.35,0.1); //Move forward to push cap and collect ball
-  waitBase(3000);
-  delay(200);
-  setPusher(80);  //Pusher in position to hit low flag
-  baseMove(-10, 0.62, 0.0);    // move back to position for the turn to the cap
-  waitBase(10000);
-  intake.move(0);
+baseMove(34.5,0.55,0.1); //Move forward to push cap and collect ball
+waitBase(3000);
+delay(200);
+setPusher(80);  //Pusher in position to hit low flag
+baseMove(-10, 0.59, 0.0);    // move back to position for the turn to the cap
+waitBase(3000);
+intake.move(0);
 
   baseTurn(-38,0.5,0.15); //Back face cap
   waitBase(3000);
 
-  baseMove(-18.5, 0.6, 0.0); // Move back to Intake cap
+
+  baseMove(-18.5, 0.6, 0.05); // Move back to Intake cap
   waitBase(3000);
-  setLift(120);    //raise the cap
+//  delay(500);
+  setLift(200);    //raise the cap
   delay(200);
 
-  baseMove(10, 0.64,0.0); //Position to score on post
+  baseMove(7, 0.64,0.0); //Position to score on post
   waitBase(10000);
 
-  baseTurn(-12,-56.8,0.6,0.0); //Face post
-  waitBase(10000);
+baseTurn(-90,0.9,0.0);
+//  baseTurn(-12,-56.8,0.6,0.0); //Face post
+  waitBase(3000);
 
   pausePusher(true);
-  baseMove(33, 0.35, 0.0);  //Move to Score cap
-  waitBase(3000);
 
-  setLift(515);   //score cap
+  baseMove(36.0, 0.38, 0.1);     //Move to Score cap
+  waitBase(10000);
+
+  setLift(515);                //score cap
   double startScore = millis();
   while(fabs(515 - lift.get_position()) > 5 && millis()-startScore<1300) {
-    timerBase(50,50,25);
+    delay(25);
+    FL.move_relative(0, 100);
+    BL.move_relative(0, 100);
+    FR.move_relative(0, 100);
+    BR.move_relative(0, 100);
   }
-  timerBase(-50,-50,500); //move out from the pole
-  pauseBase(true);
-/*
-  setLift(0); //put lift down
-
-  resetCoord(<x>,<y>,<angle>);
-  baseStraight(false);
- pauseBase(false);
-  baseMove(5, 0.6,0.2); //Move away from wall
+  baseMove(-7, 0.5, 0.0);      //Move away from wall
   waitBase(3000);
 
-  baseTurn(-3,0.48,0.5);  //Turn to face low flags
+  setLift(0);                  //put lift down
+  delay(500);                  //wait for lift to come down
+  //resetCoord(<x>,<y>,<angle>);
+
+  baseTurn(-5,0.48,0.2);       //Turn to face low flags
   waitBase(3000);
-  setLift(0);
   delay(100);
-  baseMove(91,0.53,0.2);  //Score low flags
-  while(getY()<0) delay(25); //Shoot high flags while going forward to hit low flag
-  catapultActivated = true; //Score 2 high flags
+  baseMove(60,0.55,0.1);
   waitBase(3000);
+  baseTurn(-5,49.5,2.0,0.1);      //turn to Score high flags
+  waitBase(3000);
+  catapultActivated = true;    //Score 2 high flags
   delay(200);
-
+  baseTurn(-7,49.5,2.0,0.1);      //turn to Score low flags
+  waitBase(3000);
+  baseMove(34,0.55,0.0);       // Score low flags
+  waitBase(3000);
+/*
   //////////FROM HERE: IT IS AUTONOMOUS
   baseMove(-40.5,0.56,0.2);  //Get into position to get balls from cap
   waitBase(3000);
