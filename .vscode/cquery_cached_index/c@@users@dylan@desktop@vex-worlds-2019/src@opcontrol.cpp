@@ -175,7 +175,7 @@ void opcontrol() {
     	BL.tare_position();
     	BR.tare_position();
       double startClimb = millis();
-      while(gyro.get_value() <480){
+    /*  while(gyro.get_value() <480){
         if(millis()-startClimb< 2000){
           setClimb(false);
           pausePusher(true);
@@ -187,12 +187,17 @@ void opcontrol() {
         printf("%f \t %f\n",BL.get_actual_velocity(),FL.get_actual_velocity());
         delay(25);
       }
-      while(gyro.get_value() > 10){
+      */
+      while(gyro.get_value() > 20){
+        if(millis()-startClimb< 2000){
+          setClimb(false);
+          pausePusher(true);
+        }
         FL.move(120);
         BL.move(120);
         FR.move(120);
         BR.move(120);
-        printf("%f \t %f\n",BL.get_actual_velocity(),FL.get_actual_velocity());
+    //    printf("%f \t %f\n",BL.get_actual_velocity(),FL.get_actual_velocity());
         delay(25);
       }
       FL.move_relative(0, 100);

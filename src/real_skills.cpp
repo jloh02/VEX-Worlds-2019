@@ -15,42 +15,36 @@ void real_skills(){
   waitBase(3000);
   delay(200);
   setPusher(80);  //Pusher in position to hit low flag
-  baseMove(-15, 0.62, 0.0);    // move back to position for the turn to the cap
+  baseMove(-10, 0.62, 0.0);    // move back to position for the turn to the cap
   waitBase(10000);
   intake.move(0);
 
-  baseTurn(-50,0.5,0.15); //Back face cap
+  baseTurn(-38,0.5,0.15); //Back face cap
   waitBase(3000);
-  timerBase(-80,-80,500);
-  pauseBase(true);
-  delay(500);
-//  baseMove(-18.5, 0.6, 0.0); // Move back to Intake cap
 
+  baseMove(-18.5, 0.6, 0.0); // Move back to Intake cap
+  waitBase(3000);
   setLift(120);    //raise the cap
   delay(200);
-pauseBase(false);
-  baseMove(5, 0.64,0.0); //Position to score on post
+
+  baseMove(10, 0.64,0.0); //Position to score on post
   waitBase(10000);
 
   baseTurn(-12,-56.8,0.6,0.0); //Face post
   waitBase(10000);
-  delay(3000);
-  timerBase(50, 50, 1000);  //Pause base, move by time, unpause base
-  pauseBase(true);
-/*
+
   pausePusher(true);
-  baseStraight(true);
   baseMove(33, 0.35, 0.0);  //Move to Score cap
   waitBase(3000);
 
-  pauseBase(true);    //pause the base function
   setLift(515);   //score cap
   double startScore = millis();
   while(fabs(515 - lift.get_position()) > 5 && millis()-startScore<1300) {
     timerBase(50,50,25);
   }
-  timerBase(-50,-50,700); //move out from the pole
-
+  timerBase(-50,-50,500); //move out from the pole
+  pauseBase(true);
+/*
   setLift(0); //put lift down
 
   resetCoord(<x>,<y>,<angle>);
