@@ -58,10 +58,84 @@ void backRed(){
   delay(200);
   baseTurn(90,0.5,0.0);      //turn to climb
   waitBase(3000);
-  baseMove(34,0.55,0.0);       // climb
+  baseMove(34,0.55,0.0);       //move to climb
   waitBase(3000);
+  //we shld make the below into a function so its not so messy
+  pauseBase(true);
+  Motor FL(FLport);
+  Motor FR(FRport);
+  Motor BL(BLport);
+  Motor BR(BRport);
+  Motor pusher(pusherPort);
+  ADIGyro gyro(gyroPort);
+
+  FL.tare_position();
+  FR.tare_position();
+  BL.tare_position();
+  BR.tare_position();
+  while(BL.get_position()>-8 && BR.get_position()>-8){
+    FL.move(-70);
+    BL.move(-70);
+    FR.move(-70);
+    BR.move(-70);
+    delay(25);
+  }
+  FL.move_relative(0, 100);
+  BL.move_relative(0, 100);
+  FR.move_relative(0, 100);
+  BR.move_relative(0, 100);
+
+  setClimb(true);
+  //pauseLift(true);
+  //printf("%f\n",pusher.get_position());
+  while(pusher.get_position() <1250 ) {
+    FL.move(0);
+    BL.move(0);
+    FR.move(0);
+    BR.move(0);
+    delay(25);
+  }
+  delay(200);
+  FL.tare_position();
+  FR.tare_position();
+  BL.tare_position();
+  BR.tare_position();
+  double startClimb = millis();
+/*  while(gyro.get_value() <480){
+    if(millis()-startClimb< 2000){
+      setClimb(false);
+      pausePusher(true);
+    }
+    FL.move(120);
+    BL.move(120);
+    FR.move(120);
+    BR.move(120);
+    printf("%f \t %f\n",BL.get_actual_velocity(),FL.get_actual_velocity());
+    delay(25);
+  }
+  */
+  while(gyro.get_value() > 20){
+    if(millis()-startClimb< 1000){
+      setClimb(false);
+      pausePusher(true);
+    }
+    FL.move(120);
+    BL.move(120);
+    FR.move(120);
+    BR.move(120);
+    //printf("%f \t %f\n",BL.get_actual_velocity(),FL.get_actual_velocity());
+    delay(100);
+  }
+  FL.move_relative(0, 80);
+  BL.move_relative(0, 80);
+  FR.move_relative(0, 80);
+  BR.move_relative(0, 80);
+  setLift(20);
+  delay(1000);
 
 }
+
+
 void backBlue(){
   Motor lift(liftPort);
   Motor intake(intakePort);
@@ -258,13 +332,15 @@ void basicRed(){  //94%
   double autonStart = millis();
 
   redCore();
-
+  setPusher(450);            //push down to push the cap to score
+  delay(200);
   baseMove(31,0.5,0.0);       //Position to hit next set of flags
   waitBase(1300);
   baseTurn(47,51,0.6,0.0);    //Face mid flags
   waitBase(650);
   baseMove(-5,0.6,0.0);       //Reverse to get better shooting arc
   waitBase(600);
+  setPusher(20);
   int excessCount = 0;
   while(millis()-autonStart < 14800) {intake.move(-100); delay(25);excessCount++;}  //Waste time until last second
   printf("Excess: %d\n", excessCount*25);
@@ -279,7 +355,6 @@ void basicBlue(){
   Motor intake(intakePort);
 
   blueCore();
-
   baseMove(31,0.5,0.0);       //Position to hit next set of flags
   waitBase(1300);
   baseTurn(-48.5,51,0.6,0.0);    //Face mid flags
@@ -299,12 +374,15 @@ void oppRed(){
 
   redCore();
 
+  setPusher(450);              //push down to push the cap to score
+  delay(200);
   baseMove(34,0.5,0.0);       //Position to hit next set of flags
   waitBase(1500);
-  baseTurn(95,50,0.8,0.0);    //Face mid flags
+  baseTurn(95,50,0.8,0.0);    //Face opp flags
   waitBase(650);
   baseMove(2,0.9,0.0);     //Move forward to get better arc
-  //waitBase(650);
+  waitBase(650);
+  setPusher(20);
   while(millis()-autonStart < 14800) {intake.move(-100); delay(25);}  //Waste time until last second
   baseMove(0,0,0);
   intake.move(0);

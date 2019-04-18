@@ -72,13 +72,13 @@ void opcontrol() {
   int intakeSpd = 0;
   bool pusherReadyToFlip = false;
 
-  setPusher(20);
+  setPusher(10);
   setLift(liftDownPosition);
 	while (true) {
     //master.print(2, 0, "Auton: %2d", autonNum);
     //master.print(2, 0, "Pot: %4d", cataPot.get_value());
     //master.print(2, 0, "Pow: %7d", catapult.get_power());
-    printf("Gyro value : %f\n", gyro.get_value());
+  //  printf("Gyro value : %f\n", gyro.get_value());
 
 		int left = master.get_analog(ANALOG_LEFT_Y);
 		int right = master.get_analog(ANALOG_RIGHT_Y);
@@ -149,7 +149,7 @@ void opcontrol() {
     	FR.tare_position();
     	BL.tare_position();
     	BR.tare_position();
-      while(BL.get_position()>-15 && BR.get_position()>-15){
+      while(BL.get_position()>-8 && BR.get_position()>-8){
         FL.move(-70);
         BL.move(-70);
         FR.move(-70);
@@ -164,7 +164,7 @@ void opcontrol() {
       setClimb(true);
       //pauseLift(true);
       //printf("%f\n",pusher.get_position());
-      while(pusher.get_position() > -670) {
+      while(pusher.get_position() <1250 ) {
         FL.move(0);
         BL.move(0);
         FR.move(0);
@@ -191,7 +191,7 @@ void opcontrol() {
       }
       */
       while(gyro.get_value() > 20){
-        if(millis()-startClimb< 2000){
+        if(millis()-startClimb< 1000){
           setClimb(false);
           pausePusher(true);
         }
@@ -227,7 +227,7 @@ void opcontrol() {
         BL.tare_position();
         BR.tare_position();
         double startReverse = millis();
-        while(millis()-startReverse < 3000){
+        while(millis()-startReverse < 1000){
           FL.move(-70);
           BL.move(-70);
           FR.move(-70);
@@ -236,7 +236,7 @@ void opcontrol() {
           delay(25);
         }
         pausePusher(false);
-        setPusher(20);
+        setPusher(10);
         pusherReadyToFlip = false;
       }
       FL.move_relative(0, 100);
