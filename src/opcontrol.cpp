@@ -1,6 +1,7 @@
 #include "main.h"
 #include "mech_lib.hpp"
 #include "base_lib.hpp"
+#include "driver_func.hpp"
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -29,23 +30,6 @@
  // L1: Cap intake up/down
  // L2: Catapult
  // R1/2: Intake
-
-#define liftScorePosition 515
-#define liftDescorePosition 544
-#define liftUpPosition 120
-#define liftDownPosition 0
-
-#define poleAlignPower 50
-#define lowerLiftDelay 200
-#define backOutTime 300
-#define backOutPower 100
-
-#define pushInDelay 0
-#define pushInTime 500
-#define pushInPower 50
-#define pushIn2Time 200
-#define pushIn2Power 80
-#define descoreDelay 80
 
 void opcontrol() {
   Motor FL (FLport);
@@ -78,7 +62,7 @@ void opcontrol() {
     //master.print(2, 0, "Auton: %2d", autonNum);
     //master.print(2, 0, "Pot: %4d", cataPot.get_value());
     //master.print(2, 0, "Pow: %7d", catapult.get_power());
-  //  printf("Gyro value : %f\n", gyro.get_value());
+    //printf("Gyro value : %f\n", gyro.get_value());
 
 		int left = master.get_analog(ANALOG_LEFT_Y);
 		int right = master.get_analog(ANALOG_RIGHT_Y);
