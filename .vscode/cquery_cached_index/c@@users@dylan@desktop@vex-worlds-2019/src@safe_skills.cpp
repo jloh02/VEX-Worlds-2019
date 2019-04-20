@@ -39,7 +39,7 @@ void safe_skills(){
   waitBase(750);
   baseTurn(45, 0.62, 0.2);   //Face cap
   waitBase(600);
-  baseMove(16, 0.3, 0.1);  //Move towards cap
+  baseMove(15.5, 0.3, 0.1);  //Move towards cap
   waitBase(800);
   setPusher(390);
   delay(500);
@@ -70,9 +70,9 @@ void safe_skills(){
   baseMove(35,0.5,0.0);       //Position to hit next set of flags and also flip the cap on the floor
   waitBase(1500);
   intake.move(0);
-  baseTurn(47,51,0.6,0.0);    //Face mid flags
+  baseTurn(49,51,0.6,0.0);    //Face mid flags
   waitBase(650);
-  baseMove(-6,0.6,0.0);       //Reverse to get better shooting arc
+  baseMove(-5.5,0.6,0.0);       //Reverse to get better shooting arc
   waitBase(600);
   setPusher(20);
   delay(700);
@@ -84,7 +84,7 @@ void safe_skills(){
   baseTurn(7,2.9,0.25);   //turn to hit the low flag
   waitBase(4000);
   delay(200);
-  baseMove(44,0.62,0.05);   //move forward to hit the low flag
+  baseMove(44,0.65,0.05);   //move forward to hit the low flag
   waitBase(3000);
   delay(200);
   baseMove(-7,0.65,0.0);  //move out from the low flag
@@ -122,25 +122,24 @@ void safe_skills(){
 
   baseMove(-8,0.5,0.0);     //Reverse to original position
   waitBase(600);
-  setPusher(80);
+  setPusher(100);
 
-  baseTurn(0,0.55,0.1);
+  baseTurn(0,0.58,0.1);
   waitBase(3000);
   baseMove(-10,0.7,0.15);     //Move backward to get better arc
   waitBase(650);
   baseTurn(93,50,0.8,0.0);    //Face opp flags
   waitBase(650);
-  setPusher(20);
   intake.move(0);
   delay(200);
   catapultActivated = true;   //Shoot opp flags
   delay(200);
 
   //going to climb
-  intake.move(100);
+  intake.move(-100);
   baseMove(5,0.5,0.0);        //move forward to position for the turn
   waitBase(3000);
-  setPusher(360);
+  setPusher(340);
   baseTurn(-90,0.62,0.2);     //turn to move forward to climb
   waitBase(3000);
   baseMove(30,0.8,0.0);
@@ -152,12 +151,12 @@ void safe_skills(){
   waitBase(3000);
   setPusher(420);
   delay(500);
-  intake.move(0);
-  baseMove(35,0.9,0.0);
+  baseMove(37,0.9,0.0);
   waitBase(3000);
+  intake.move(0);
   baseMove(-8,0.7,0.2);
   waitBase(3000);
-  setPusher(80);
+  setPusher(270);
   delay(500);
   baseTurn(-180,0.62,0.2);
   waitBase(3000);
@@ -166,18 +165,6 @@ void safe_skills(){
   pauseBase(true);
   directClimb();
   delay(200);
-
-
-
-
-
-
-
-
-
-
-
-
   // <insert red std skills> change turn to 90 deg to hit caps first then shoot
 
   //Hit bottom-mid flag

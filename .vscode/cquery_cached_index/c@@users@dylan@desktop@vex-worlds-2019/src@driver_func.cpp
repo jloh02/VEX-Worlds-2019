@@ -94,8 +94,11 @@ void directClimb(){
 
   setClimb(true);
   //pauseLift(true);
+
+  //nani tf? liddat it'll only print once at the start?
   printf("%f\n",pusher.get_position());
-  while(pusher.get_position() > -670 ) {
+  while(pusher.get_position() > -680 ) {
+    printf("%f\n",pusher.get_position());
   /*  if(pusher.get_position() < -650){
       FL.move(100);
       BL.move(100);
@@ -104,12 +107,11 @@ void directClimb(){
       delay(25);
     }
   else{*/
-    FL.move(10);
-    BL.move(10);
-    FR.move(10);
-    BR.move(10);
+    FL.move(20);
+    BL.move(20);
+    FR.move(20);
+    BR.move(20);
     delay(25);
-
   }
 
   delay(50);
@@ -132,9 +134,9 @@ void directClimb(){
   }
   */
   while(gyro.get_value() > 20){
-    if(millis()-startClimb< 1000){
+    if(millis()-startClimb > 500){
       setClimb(false);
-      pausePusher(true);
+      setPusher(170);
     }
     FL.move(120);
     BL.move(120);
