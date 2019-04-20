@@ -112,7 +112,7 @@ void pusherControl(void * ignore){
 		double power = error*pushP + (error-oldErr)*pushD;
 		oldErr = error;
 
-		if(pusherClimb) pusher.move((-670 - pusher.get_position())*20.0);
+		if(pusherClimb) pusher.move((-680 - pusher.get_position())*20.0);
 		else if(!pusherPause) pusher.move(power);
 		else pusher.move(0);
 

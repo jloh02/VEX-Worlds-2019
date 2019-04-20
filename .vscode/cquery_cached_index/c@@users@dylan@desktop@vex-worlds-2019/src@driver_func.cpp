@@ -80,7 +80,7 @@ void directClimb(){
   FR.tare_position();
   BL.tare_position();
   BR.tare_position();
-  while(BL.get_position()>-8 && BR.get_position()>-8){
+  while(BL.get_position()>-15 && BR.get_position()>-15){
     FL.move(-70);
     BL.move(-70);
     FR.move(-70);
@@ -94,15 +94,25 @@ void directClimb(){
 
   setClimb(true);
   //pauseLift(true);
-  //printf("%f\n",pusher.get_position());
-  while(pusher.get_position() <1250 ) {
-    FL.move(0);
-    BL.move(0);
-    FR.move(0);
-    BR.move(0);
+  printf("%f\n",pusher.get_position());
+  while(pusher.get_position() > -670 ) {
+  /*  if(pusher.get_position() < -650){
+      FL.move(100);
+      BL.move(100);
+      FR.move(100);
+      BR.move(100);
+      delay(25);
+    }
+  else{*/
+    FL.move(10);
+    BL.move(10);
+    FR.move(10);
+    BR.move(10);
     delay(25);
+
   }
-  delay(200);
+
+  delay(50);
   FL.tare_position();
   FR.tare_position();
   BL.tare_position();
@@ -138,5 +148,5 @@ void directClimb(){
   FR.move_relative(0, 80);
   BR.move_relative(0, 80);
   setLift(20);
-  delay(1000);
+  delay(200);
 }

@@ -56,7 +56,7 @@ void opcontrol() {
   int intakeSpd = 0;
   bool pusherReadyToFlip = false;
 
-  setPusher(10);
+  setPusher(40);
   setLift(liftDownPosition);
 	while (true) {
     //master.print(2, 0, "Auton: %2d", autonNum);
@@ -80,13 +80,13 @@ void opcontrol() {
 
     if(master.get_digital_new_press(DIGITAL_X) == 1) { //Auto getting balls from the cap
       if(!pusherReadyToFlip) {
-        setPusher(250);
+        setPusher(300);
         pusherReadyToFlip = true;
       }
       else{
         Motor pusher (pusherPort);
         Motor intake (intakePort);
-        setPusher(380);
+        setPusher(400);
         delay(400);
         pausePusher(true);
 
@@ -95,7 +95,7 @@ void opcontrol() {
         BL.tare_position();
         BR.tare_position();
         double startReverse = millis();
-        while(millis()-startReverse < 1000){
+        while(millis()-startReverse < 700){
           FL.move(-70);
           BL.move(-70);
           FR.move(-70);
@@ -104,7 +104,9 @@ void opcontrol() {
           delay(25);
         }
         pausePusher(false);
-        setPusher(10);
+        setPusher(40);
+        intake.move(100);
+        delay(200);
         pusherReadyToFlip = false;
       }
       FL.move_relative(0, 100);
@@ -112,10 +114,11 @@ void opcontrol() {
       FR.move_relative(0, 100);
       BR.move_relative(0, 100);
       intake.move(100);
+      delay(200);
       pausePusher(false);
     };
 
-    targetIntakeSpd = master.get_digital(DIGITAL_R1)*100-master.get_digital(DIGITAL_R2)*100;
+    targetIntakeSpd = master.get_digital(DIGITAL_R1)*110-master.get_digital(DIGITAL_R2)*110;
     //targetIntakeSpd*=-1;
 
     int diff = targetIntakeSpd - intakeSpd;

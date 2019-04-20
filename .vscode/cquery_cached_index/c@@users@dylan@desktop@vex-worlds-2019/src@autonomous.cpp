@@ -47,5 +47,6 @@ void autonomous() {
     case 10:
       real_skills();
       break;
-  }
+}
+
 }

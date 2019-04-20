@@ -293,6 +293,7 @@ void blueCore(){
   waitBase(1300);
   baseTurn(-2,1.05,0.8);  //Turn to face high flags
   waitBase(1900);
+  delay(200);
   catapultActivated = true; //Score 2 high flags
   intake.move(0);
   delay(200);
@@ -300,8 +301,8 @@ void blueCore(){
   setPusher(250);   //Pusher in position to get balls from cap
   baseMove(12,0.5,0.2);    //Position to get good angle to get balls from cap
   waitBase(750);
-  baseTurn(-45, 0.62, 0.2);   //Face cap
-  waitBase(600);
+  baseTurn(-47, 0.62, 0.2);   //Face cap
+  waitBase(1000);
   baseMove(18, 0.25, 0.11);  //Move towards cap
   waitBase(800);
   setPusher(390);
@@ -332,7 +333,7 @@ void basicRed(){  //94%
   double autonStart = millis();
 
   redCore();
-  setPusher(450);            //push down to push the cap to score
+//  setPusher(450);            //push down to push the cap to score
   delay(200);
   baseMove(31,0.5,0.0);       //Position to hit next set of flags
   waitBase(1300);
@@ -374,7 +375,7 @@ void oppRed(){
 
   redCore();
 
-  setPusher(450);              //push down to push the cap to score
+  //setPusher(450);              //push down to push the cap to score
   delay(200);
   baseMove(34,0.5,0.0);       //Position to hit next set of flags
   waitBase(1500);

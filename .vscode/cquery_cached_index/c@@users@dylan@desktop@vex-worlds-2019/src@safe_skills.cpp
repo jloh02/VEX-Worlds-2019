@@ -1,4 +1,5 @@
 #include "skills_sets.hpp"
+#include "driver_func.hpp"
 
 void safe_skills(){
   Motor intake(intakePort);
@@ -38,7 +39,7 @@ void safe_skills(){
   waitBase(750);
   baseTurn(45, 0.62, 0.2);   //Face cap
   waitBase(600);
-  baseMove(18, 0.3, 0.1);  //Move towards cap
+  baseMove(16, 0.3, 0.1);  //Move towards cap
   waitBase(800);
   setPusher(390);
   delay(500);
@@ -54,7 +55,7 @@ void safe_skills(){
   waitBase(600);*/
   delay(750);
 
-  baseMove(-8,0.5,0.0);     //Reverse to original position
+  baseMove(-9,0.5,0.0);     //Reverse to original position
   waitBase(600);
   setPusher(80);
 
@@ -64,14 +65,14 @@ void safe_skills(){
 
 
   ////proceed to hit the middle flag
-  setPusher(350);            //set to score cap on the floor
+  setPusher(350);               //set to score cap on the floor
   delay(200);
   baseMove(35,0.5,0.0);       //Position to hit next set of flags and also flip the cap on the floor
   waitBase(1500);
   intake.move(0);
   baseTurn(47,51,0.6,0.0);    //Face mid flags
   waitBase(650);
-  baseMove(-7,0.6,0.0);       //Reverse to get better shooting arc
+  baseMove(-6,0.6,0.0);       //Reverse to get better shooting arc
   waitBase(600);
   setPusher(20);
   delay(700);
@@ -80,30 +81,30 @@ void safe_skills(){
 
   ////continuation
   intake.move(-100);
-  baseTurn(7,2.5,0.25);
+  baseTurn(7,2.9,0.25);   //turn to hit the low flag
   waitBase(4000);
   delay(200);
-  baseMove(40,0.62,0.05);
+  baseMove(44,0.62,0.05);   //move forward to hit the low flag
   waitBase(3000);
   delay(200);
-  baseMove(-5,0.65,0.0);
+  baseMove(-7,0.65,0.0);  //move out from the low flag
   waitBase(5000);
-  baseTurn(-60,0.6,0.3);
+  baseTurn(-60,0.6,0.3);   //turn to get to the other cap with 2 balls
   waitBase(3000);
-  baseMove(-75,0.55,0.0);
+  baseMove(-75,0.55,0.0);   //move to the cap with two balls
   waitBase(3000);
-  baseTurn(0,0.6,0.3);
+  baseTurn(0,0.6,0.3);   //turn to continue blue side auton
   waitBase(3000);
   intake.move(0);
 
   //blue auton basically
 
   setPusher(250);   //Pusher in position to get balls from cap
-  baseMove(10.5,0.5,0.2);    //Position to get good angle to get balls from cap
+  baseMove(11.5,0.5,0.2);    //Position to get good angle to get balls from cap
   waitBase(3000);
-  baseTurn(-45, 0.62, 0.2);   //Face cap
+  baseTurn(-46, 0.62, 0.2);   //Face cap
   waitBase(600);
-  baseMove(17, 0.25, 0.11);  //Move towards cap
+  baseMove(15.5, 0.2, 0.0);  //Move towards cap
   waitBase(800);
   setPusher(390);
   delay(500);
@@ -123,17 +124,48 @@ void safe_skills(){
   waitBase(600);
   setPusher(80);
 
-  baseTurn(0,0.5,0.0);
+  baseTurn(0,0.55,0.1);
   waitBase(3000);
-  baseMove(-10,0.7,0.2);     //Move backward to get better arc
+  baseMove(-10,0.7,0.15);     //Move backward to get better arc
   waitBase(650);
-  baseTurn(95,50,0.8,0.0);    //Face opp flags
+  baseTurn(93,50,0.8,0.0);    //Face opp flags
   waitBase(650);
   setPusher(20);
   intake.move(0);
+  delay(200);
   catapultActivated = true;   //Shoot opp flags
   delay(200);
 
+  //going to climb
+  intake.move(100);
+  baseMove(5,0.5,0.0);        //move forward to position for the turn
+  waitBase(3000);
+  setPusher(360);
+  baseTurn(-90,0.62,0.2);     //turn to move forward to climb
+  waitBase(3000);
+  baseMove(30,0.8,0.0);
+  waitBase(3000);
+  delay(600);
+  setPusher(80);
+  delay(500);
+  baseMove(-10,0.7,0.2);
+  waitBase(3000);
+  setPusher(420);
+  delay(500);
+  intake.move(0);
+  baseMove(35,0.9,0.0);
+  waitBase(3000);
+  baseMove(-8,0.7,0.2);
+  waitBase(3000);
+  setPusher(80);
+  delay(500);
+  baseTurn(-180,0.62,0.2);
+  waitBase(3000);
+  baseMove(10,0.5,0.0);
+  waitBase(500);
+  pauseBase(true);
+  directClimb();
+  delay(200);
 
 
 
