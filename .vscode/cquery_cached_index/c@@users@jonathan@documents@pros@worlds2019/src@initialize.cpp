@@ -10,6 +10,9 @@ bool catapultActivated = false;
  * All other competition modes are blocked by initialize; it is recommended
  * to keep execution time for this mode under a few seconds.
  */
+
+ //Hi jaren
+
 void initialize() {
 
 	initSelector();
