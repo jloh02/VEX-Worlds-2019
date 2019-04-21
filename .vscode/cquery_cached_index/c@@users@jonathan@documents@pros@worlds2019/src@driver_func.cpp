@@ -97,7 +97,8 @@ void directClimb(){
 
   //nani tf? liddat it'll only print once at the start?
   printf("%f\n",pusher.get_position());
-  while(pusher.get_position() > -680 ) {
+  double startPush = millis();
+  while(pusher.get_position() > -680  && millis()-startPush < 1000) {
     printf("%f\n",pusher.get_position());
   /*  if(pusher.get_position() < -650){
       FL.move(100);
@@ -120,20 +121,15 @@ void directClimb(){
   BL.tare_position();
   BR.tare_position();
   double startClimb = millis();
-  /*  while(gyro.get_value() <480){
-    if(millis()-startClimb< 2000){
-      setClimb(false);
-      pausePusher(true);
-    }
-    FL.move(120);
-    BL.move(120);
-    FR.move(120);
-    BR.move(120);
-    printf("%f \t %f\n",BL.get_actual_velocity(),FL.get_actual_velocity());
+
+  while(gyro.get_value() > 300){  //MARCUS WONG! IT'S IN 1/10 DEGREES
+    FL.move(100);
+    BL.move(100);
+    FR.move(100);
+    BR.move(100);
     delay(25);
   }
-  */
-  while(gyro.get_value() > 20){
+  while(gyro.get_value() > 50){  //MARCUS WONG! IT'S IN 1/10 DEGREES
     if(millis()-startClimb > 500){
       setClimb(false);
       setPusher(170);
@@ -142,9 +138,9 @@ void directClimb(){
     BL.move(120);
     FR.move(120);
     BR.move(120);
-    //printf("%f \t %f\n",BL.get_actual_velocity(),FL.get_actual_velocity());
-    delay(100);
+    delay(25);
   }
+  delay(75);
   FL.move_relative(0, 80);
   BL.move_relative(0, 80);
   FR.move_relative(0, 80);
