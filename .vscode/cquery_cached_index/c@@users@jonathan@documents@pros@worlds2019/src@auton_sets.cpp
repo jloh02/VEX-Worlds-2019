@@ -4,7 +4,7 @@ void backRed(){
   Motor lift(liftPort);
   Motor intake(intakePort);
 
-  setPusher(20);  //Pusher in position to hit low flag
+  setPusher(80);  //Pusher in position to hit low flag
 
   resetCoord(4,-51.3,90);
   intake.move(100);  //start intake
@@ -140,7 +140,7 @@ void backBlue(){
   Motor lift(liftPort);
   Motor intake(intakePort);
 
-  setPusher(20);  //Pusher in position to hit low flag
+  setPusher(80);  //Pusher in position to hit low flag
 
   resetCoord(4,-51.3,-90);
   intake.move(100);  //start intake
@@ -293,6 +293,7 @@ void blueCore(){
   waitBase(1300);
   baseTurn(-2,1.05,0.8);  //Turn to face high flags
   waitBase(1900);
+  delay(200);
   catapultActivated = true; //Score 2 high flags
   intake.move(0);
   delay(200);
@@ -300,8 +301,8 @@ void blueCore(){
   setPusher(250);   //Pusher in position to get balls from cap
   baseMove(12,0.5,0.2);    //Position to get good angle to get balls from cap
   waitBase(750);
-  baseTurn(-45, 0.62, 0.2);   //Face cap
-  waitBase(600);
+  baseTurn(-47, 0.62, 0.2);   //Face cap
+  waitBase(1000);
   baseMove(18, 0.25, 0.11);  //Move towards cap
   waitBase(800);
   setPusher(390);
@@ -327,12 +328,12 @@ void blueCore(){
   intake.move(0);
 }
 
-void basicRed(){  //94%
+void basicRed(){
   Motor intake(intakePort);
   double autonStart = millis();
 
   redCore();
-  setPusher(450);            //push down to push the cap to score
+  //setPusher(450);            //push down to push the cap to score
   delay(200);
   baseMove(31,0.5,0.0);       //Position to hit next set of flags
   waitBase(1300);
@@ -340,7 +341,7 @@ void basicRed(){  //94%
   waitBase(650);
   baseMove(-5,0.6,0.0);       //Reverse to get better shooting arc
   waitBase(600);
-  setPusher(20);
+  setPusher(80);
   int excessCount = 0;
   while(millis()-autonStart < 14800) {intake.move(-100); delay(25);excessCount++;}  //Waste time until last second
   printf("Excess: %d\n", excessCount*25);
@@ -374,7 +375,7 @@ void oppRed(){
 
   redCore();
 
-  setPusher(450);              //push down to push the cap to score
+  //setPusher(450);              //push down to push the cap to score
   delay(200);
   baseMove(34,0.5,0.0);       //Position to hit next set of flags
   waitBase(1500);
@@ -382,7 +383,7 @@ void oppRed(){
   waitBase(650);
   baseMove(2,0.9,0.0);     //Move forward to get better arc
   waitBase(650);
-  setPusher(20);
+  setPusher(80);
   while(millis()-autonStart < 14800) {intake.move(-100); delay(25);}  //Waste time until last second
   baseMove(0,0,0);
   intake.move(0);

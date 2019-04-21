@@ -74,7 +74,7 @@ void safe_skills(){
   waitBase(650);
   baseMove(-5.5,0.6,0.0);       //Reverse to get better shooting arc
   waitBase(600);
-  setPusher(20);
+  setPusher(80);
   delay(700);
   catapultActivated = true;   //Shoot mid flags
   delay(500);
@@ -165,11 +165,4 @@ void safe_skills(){
   pauseBase(true);
   directClimb();
   delay(200);
-  // <insert red std skills> change turn to 90 deg to hit caps first then shoot
-
-  //Hit bottom-mid flag
-
-  //Collect ball from right cap
-  //Shoot right flags
-  //
 }
