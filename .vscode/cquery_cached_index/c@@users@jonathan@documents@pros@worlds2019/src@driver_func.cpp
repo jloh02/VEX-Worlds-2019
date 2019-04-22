@@ -74,6 +74,8 @@ void directClimb(){
   Motor lift(liftPort);
   ADIGyro gyro(gyroPort);
 
+  gyro.reset();
+
   Motor pusher (pusherPort);
   setLift(0);
   FL.tare_position();
