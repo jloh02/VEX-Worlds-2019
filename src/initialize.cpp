@@ -11,8 +11,6 @@ bool catapultActivated = false;
  * to keep execution time for this mode under a few seconds.
  */
 
- //Hi jaren
-
 void initialize() {
 
 	initSelector();
