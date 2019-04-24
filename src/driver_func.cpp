@@ -11,7 +11,7 @@ void scoreCap(){
   pausePusher(true);
   setLift(liftScorePosition);
   double startScore = millis();
-  while(fabs(liftScorePosition - lift.get_position()) > 5 && millis()-startScore<1300){
+  while(fabs(liftScorePosition - lift.get_position()) > 5 && millis()-startScore<1000){
     //master.print(2,0,"%3f",lift.get_position());
     FL.move(poleAlignPower);
     BL.move(poleAlignPower);
@@ -32,6 +32,7 @@ void scoreCap(){
   setLift(0);
   setPusher(80);
 }
+
 void descoreCap(){
   Motor FL (FLport);
   Motor BL (BLport);
@@ -41,7 +42,8 @@ void descoreCap(){
 
   setPusher(23);
   setLift(liftDescorePosition);
-  while(fabs(liftDescorePosition - lift.get_position()) > 5){
+  double startDecore = millis();
+  while(fabs(liftDescorePosition - lift.get_position()) > 5 && millis()-startDecore<1000){
   //  master.print(2,0,"%3f",lift.get_position());
     FL.move(0);
     BL.move(0);

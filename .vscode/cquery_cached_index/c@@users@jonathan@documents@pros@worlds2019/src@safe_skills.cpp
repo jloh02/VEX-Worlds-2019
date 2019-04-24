@@ -42,7 +42,7 @@ void safe_skills(){
   baseMove(15.5, 0.3, 0.1);  //Move towards cap
   waitBase(800);
   setPusher(390);
-  delay(300);
+  delay(350);
   pausePusher(true);
   //baseMove(6,0,0.62,0.2);   //Flip cap
   intake.move(100);  //intake balls while moving back
@@ -62,7 +62,7 @@ void safe_skills(){
   //80 degrees to avoid cap entirely
   baseTurn(83,0.9,0.0);      //Turn to get to position to hit next set of flags
   waitBase(500);
-  intake.move(0);
+
 
 
   ////proceed to hit the middle flag
@@ -70,6 +70,7 @@ void safe_skills(){
   delay(200);
   baseMove(35,0.5,0.0);       //Position to hit next set of flags and also flip the cap on the floor
   waitBase(1500);
+  intake.move(0);
   baseTurn(49,51,0.6,0.0);    //Face mid flags
   waitBase(650);
   baseMove(-5.5,0.6,0.0);       //Reverse to get better shooting arc
