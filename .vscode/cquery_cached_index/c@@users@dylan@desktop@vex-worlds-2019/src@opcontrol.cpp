@@ -39,6 +39,7 @@ void opcontrol() {
   Motor intake(intakePort);
   Motor lift(liftPort);
   Motor pusher(pusherPort);
+
   ADIGyro gyro(gyroPort);
 
   Controller master(E_CONTROLLER_MASTER);
@@ -56,15 +57,14 @@ void opcontrol() {
   int intakeSpd = 0;
   bool pusherReadyToFlip = false;
 
-  setPusher(40);
+  setPusher(80);
   setLift(liftDownPosition);
 	while (true) {
     //master.print(2, 0, "Auton: %2d", autonNum);
     //master.print(2, 0, "Pot: %4d", cataPot.get_value());
     //master.print(2, 0, "Pow: %7d", catapult.get_power());
     //printf("Gyro value : %f\n", gyro.get_value());
-
-		int left = master.get_analog(ANALOG_LEFT_Y);
+    int left = master.get_analog(ANALOG_LEFT_Y);
 		int right = master.get_analog(ANALOG_RIGHT_Y);
 
     if(master.get_digital_new_press(DIGITAL_L2) == 1) catapultActivated = true;
@@ -104,7 +104,7 @@ void opcontrol() {
           delay(25);
         }
         pausePusher(false);
-        setPusher(40);
+        setPusher(80);
         intake.move(100);
         delay(200);
         pusherReadyToFlip = false;
@@ -127,7 +127,6 @@ void opcontrol() {
 
     intake.move(intakeSpd);
 
-    //pusher.move((master.get_digital(DIGITAL_UP)-master.get_digital(DIGITAL_DOWN))*120);
     FL.move(left-2);
     BL.move(left+2);
     FR.move(right-2);

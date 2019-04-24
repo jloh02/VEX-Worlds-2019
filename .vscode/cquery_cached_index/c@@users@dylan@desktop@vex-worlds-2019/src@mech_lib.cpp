@@ -33,10 +33,10 @@ void catapultControl(void * ignore){
 	while(true){
 		//if(master.get_digital(DIGITAL_Y) == 1) catapult.move(-70);//, catapultR.move(-70);
 		/*else*/
-		//printf("%d\n",cataPot.get_value());
+	 //printf("%d\n",cataPot.get_value());
 		if(cataPot.get_value()==0) catapult.move(0);
 		else if(cataPot.get_value() > catapultReadyAngle && !catapultReady){
-			//master.print(2, 0, "%4d Readying...", cataPot.get_value());
+			master.print(2, 0, "%4d Readying...", cataPot.get_value());
 			catapult.move(100);
 			//catapultR.move(100);
 		}

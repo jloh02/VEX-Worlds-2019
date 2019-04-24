@@ -3,8 +3,9 @@
 void backRed(){
   Motor lift(liftPort);
   Motor intake(intakePort);
+  double autonStart = millis();
 
-  setPusher(20);  //Pusher in position to hit low flag
+  setPusher(80);  //Pusher in position to hit low flag
 
   resetCoord(4,-51.3,90);
   intake.move(100);  //start intake
@@ -20,7 +21,7 @@ void backRed(){
 
   baseMove(-18.5, 0.6, 0.05); // Move back to Intake cap
   waitBase(3000);
-//  delay(500);
+  //delay(500);
   setLift(200);    //raise the cap
   delay(200);
 
@@ -28,7 +29,7 @@ void backRed(){
   waitBase(10000);
 
   baseTurn(-90,0.9,0.0);
-//  baseTurn(-12,-56.8,0.6,0.0); //Face post
+  //baseTurn(-12,-56.8,0.6,0.0); //Face post
   waitBase(3000);
 
   pausePusher(true);
@@ -54,84 +55,10 @@ void backRed(){
   waitBase(3000);
   baseTurn(-5,49.5,2.0,0.1);      //turn to Score high flags
   waitBase(3000);
+  int excessCount = 0;
+  while(millis()-autonStart < 14800) {intake.move(-100); delay(25);excessCount++;}  //Waste time until last second
   catapultActivated = true;    //Score 2 high flags
   delay(200);
-  baseTurn(90,0.5,0.0);      //turn to climb
-  waitBase(3000);
-  baseMove(34,0.55,0.0);       //move to climb
-  waitBase(3000);
-  //we shld make the below into a function so its not so messy
-  pauseBase(true);
-  Motor FL(FLport);
-  Motor FR(FRport);
-  Motor BL(BLport);
-  Motor BR(BRport);
-  Motor pusher(pusherPort);
-  ADIGyro gyro(gyroPort);
-
-  FL.tare_position();
-  FR.tare_position();
-  BL.tare_position();
-  BR.tare_position();
-  while(BL.get_position()>-8 && BR.get_position()>-8){
-    FL.move(-70);
-    BL.move(-70);
-    FR.move(-70);
-    BR.move(-70);
-    delay(25);
-  }
-  FL.move_relative(0, 100);
-  BL.move_relative(0, 100);
-  FR.move_relative(0, 100);
-  BR.move_relative(0, 100);
-
-  setClimb(true);
-  //pauseLift(true);
-  //printf("%f\n",pusher.get_position());
-  while(pusher.get_position() <1250 ) {
-    FL.move(0);
-    BL.move(0);
-    FR.move(0);
-    BR.move(0);
-    delay(25);
-  }
-  delay(200);
-  FL.tare_position();
-  FR.tare_position();
-  BL.tare_position();
-  BR.tare_position();
-  double startClimb = millis();
-/*  while(gyro.get_value() <480){
-    if(millis()-startClimb< 2000){
-      setClimb(false);
-      pausePusher(true);
-    }
-    FL.move(120);
-    BL.move(120);
-    FR.move(120);
-    BR.move(120);
-    printf("%f \t %f\n",BL.get_actual_velocity(),FL.get_actual_velocity());
-    delay(25);
-  }
-  */
-  while(gyro.get_value() > 20){
-    if(millis()-startClimb< 1000){
-      setClimb(false);
-      pausePusher(true);
-    }
-    FL.move(120);
-    BL.move(120);
-    FR.move(120);
-    BR.move(120);
-    //printf("%f \t %f\n",BL.get_actual_velocity(),FL.get_actual_velocity());
-    delay(100);
-  }
-  FL.move_relative(0, 80);
-  BL.move_relative(0, 80);
-  FR.move_relative(0, 80);
-  BR.move_relative(0, 80);
-  setLift(20);
-  delay(1000);
 
 }
 
@@ -139,8 +66,9 @@ void backRed(){
 void backBlue(){
   Motor lift(liftPort);
   Motor intake(intakePort);
+  double autonStart = millis();
 
-  setPusher(20);  //Pusher in position to hit low flag
+  setPusher(80);  //Pusher in position to hit low flag
 
   resetCoord(4,-51.3,-90);
   intake.move(100);  //start intake
@@ -190,12 +118,11 @@ void backBlue(){
   waitBase(3000);
   baseTurn(-5,49.5,2.0,0.1);      //turn to Score high flags
   waitBase(3000);
+  int excessCount = 0;
+  while(millis()-autonStart < 14800) {intake.move(-100); delay(25);excessCount++;}
   catapultActivated = true;    //Score 2 high flags
   delay(200);
-  baseTurn(-90,0.5,0.0);      //turn to climb
-  waitBase(3000);
-  baseMove(34,0.55,0.0);       // climb
-  waitBase(3000);
+
 
 }
 
@@ -206,9 +133,9 @@ void redCore(){
 
   setPusher(275);   //Setup movement
   baseTurn(115, 1.1, 0.3);  //Turn to face ball on platform
-  waitBase(800);
+  waitBase(450);
   baseMove(16,0.5,1.3); //Move forward to collect ball
-  waitBase(800);
+  waitBase(700);
   setPusher(370);   //Collapse pusher over ball
   intake.move(100);
   delay(200);
@@ -220,13 +147,13 @@ void redCore(){
   delay(300);
 
   baseTurn(-5,0.48,0.5);  //Turn to face low flags
-  waitBase(850);
+  waitBase(800);
   delay(100);
   baseMove(43,0.53,0.2);  //Score low flags
-  waitBase(1800);
+  waitBase(1500);
   delay(200);
   baseMove(-49,0.56,0.2);  //Return to shooting position
-  waitBase(1800);
+  waitBase(1600);
   baseTurn(2,1.5,1.0);  //Turn to face high flags
   waitBase(300);
   catapultActivated = true; //Score 2 high flags
@@ -235,19 +162,19 @@ void redCore(){
 
   setPusher(250);   //Pusher in position to get balls from cap
   baseMove(12,0.5,0.2);    //Position to get good angle to get balls from cap
-  waitBase(750);
-  baseTurn(45, 0.62, 0.2);   //Face cap
   waitBase(600);
+  baseTurn(45, 0.62, 0.2);   //Face cap
+  waitBase(550);
   baseMove(18, 0.3, 0.1);  //Move towards cap
   waitBase(800);
   setPusher(390);
-  delay(500);
+  delay(350);
   pausePusher(true);
   //baseMove(6,0,0.62,0.2);   //Flip cap
   intake.move(100);  //intake balls while moving back
   baseMove(-11,0.7,0.2);
   delay(75);
-  waitBase(800);
+  waitBase(650);
   pausePusher(false);
   setPusher(420);
   /*baseMove(8.5,0.62,0.2);    //Collect balls from cap
@@ -260,7 +187,7 @@ void redCore(){
 
   //80 degrees to avoid cap entirely
   baseTurn(83,0.9,0.0);      //Turn to get to position to hit next set of flags
-  waitBase(550);
+  waitBase(500);
   intake.move(0);
 }
 
@@ -270,9 +197,9 @@ void blueCore(){
 
   setPusher(275);   //Setup movement
   baseTurn(-115, 1.1, 0.3);  //Turn to face ball on platform
-  waitBase(800);
+  waitBase(450);
   baseMove(15,0.5,1.3); //Move forward to collect ball
-  waitBase(800);
+  waitBase(700);
   setPusher(370);   //Collapse pusher over ball
   intake.move(100);
   delay(200);
@@ -284,64 +211,63 @@ void blueCore(){
   delay(300);
 
   baseTurn(5,0.45,0.25);  //Turn to face low flags
-  waitBase(850);
+  waitBase(800);
   delay(100);
-  baseMove(46,0.65,0.2);  //Score low flags
-  waitBase(1900);
+  baseMove(45,0.65,0.2);  //Score low flags
+  waitBase(1700);
   delay(200);
-  baseMove(-52,0.3,0.1);  //Return to shooting position
-  waitBase(1300);
-  baseTurn(-2,1.05,0.8);  //Turn to face high flags
-  waitBase(1900);
-  delay(200);
+  baseMove(-52,0.45,0.1);  //Return to shooting position
+  waitBase(1800);
+  baseTurn(-6.5,1.05,0.8);  //Turn to face high flags
+  waitBase(300);
   catapultActivated = true; //Score 2 high flags
   intake.move(0);
-  delay(200);
+  delay(300);
 
   setPusher(250);   //Pusher in position to get balls from cap
   baseMove(12,0.5,0.2);    //Position to get good angle to get balls from cap
-  waitBase(750);
+  waitBase(600);
   baseTurn(-47, 0.62, 0.2);   //Face cap
-  waitBase(1000);
+  waitBase(550);
   baseMove(18, 0.25, 0.11);  //Move towards cap
   waitBase(800);
   setPusher(390);
-  delay(500);
+  delay(350);
   pausePusher(true);
   //baseMove(6,0,0.62,0.2);   //Flip cap
   intake.move(100);  //intake balls while moving back
   baseMove(-11,0.7,0.2);
   delay(75);
-  waitBase(800);
+  waitBase(650);
   pausePusher(false);
   setPusher(420);
   /*baseMove(8.5,0.62,0.2);    //Collect balls from cap
   waitBase(600);*/
-  delay(600);
+  delay(750);
 
-  baseMove(-8,0.5,0.0);     //Reverse to original position
+  baseMove(-12,0.5,0.0);     //Reverse to original position
   waitBase(600);
-  setPusher(80);
+  //setPusher(80);
 
   baseTurn(-83,0.9,0.0);      //Turn to get to position to hit next set of flags
-  waitBase(550);
+  waitBase(500);
   intake.move(0);
 }
 
-void basicRed(){  //94%
+void basicRed(){
   Motor intake(intakePort);
   double autonStart = millis();
 
   redCore();
-//  setPusher(450);            //push down to push the cap to score
+  //setPusher(450);            //push down to push the cap to score
   delay(200);
   baseMove(31,0.5,0.0);       //Position to hit next set of flags
-  waitBase(1300);
+  waitBase(1200);
   baseTurn(47,51,0.6,0.0);    //Face mid flags
   waitBase(650);
   baseMove(-5,0.6,0.0);       //Reverse to get better shooting arc
-  waitBase(600);
-  setPusher(20);
+  waitBase(550);
+  setPusher(80);
   int excessCount = 0;
   while(millis()-autonStart < 14800) {intake.move(-100); delay(25);excessCount++;}  //Waste time until last second
   printf("Excess: %d\n", excessCount*25);
@@ -356,15 +282,16 @@ void basicBlue(){
   Motor intake(intakePort);
 
   blueCore();
+
   baseMove(31,0.5,0.0);       //Position to hit next set of flags
   waitBase(1300);
-  baseTurn(-48.5,51,0.6,0.0);    //Face mid flags
+  baseTurn(-49.5,51,0.6,0.0);    //Face mid flags
   waitBase(650);
-  baseMove(-5,0.6,0.0);       //Reverse to get better shooting arc
+  baseMove(-5.0,0.6,0.0);       //Reverse to get better shooting arc
   waitBase(600);
   while(millis()-autonStart < 14800) {intake.move(-100); delay(25);}  //Waste time until last second
   baseMove(0,0,0);
-  intake.move(0);
+  intake.move(-100);
   catapultActivated = true;   //Shoot mid flags
   delay(200);
 }
@@ -378,12 +305,12 @@ void oppRed(){
   //setPusher(450);              //push down to push the cap to score
   delay(200);
   baseMove(34,0.5,0.0);       //Position to hit next set of flags
-  waitBase(1500);
+  waitBase(1400);
   baseTurn(95,50,0.8,0.0);    //Face opp flags
   waitBase(650);
   baseMove(2,0.9,0.0);     //Move forward to get better arc
-  waitBase(650);
-  setPusher(20);
+  waitBase(350);
+  setPusher(80);
   while(millis()-autonStart < 14800) {intake.move(-100); delay(25);}  //Waste time until last second
   baseMove(0,0,0);
   intake.move(0);
@@ -397,8 +324,9 @@ void oppBlue(){
 
   blueCore();
 
+  delay(200);
   baseMove(36,0.5,0.0);       //Position to hit next set of flags
-  waitBase(1700);
+  waitBase(1600);
   baseTurn(-94,48,0.8,0.0);    //Face opp flags
   waitBase(650);
   while(millis()-autonStart < 14800) {intake.move(-100); delay(25);}  //Waste time until last second

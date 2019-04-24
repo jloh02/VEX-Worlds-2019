@@ -10,8 +10,8 @@ bool catapultActivated = false;
  * All other competition modes are blocked by initialize; it is recommended
  * to keep execution time for this mode under a few seconds.
  */
-void initialize() {
 
+void initialize() {
 	initSelector();
 
 	Motor FL (FLport, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_DEGREES);
@@ -22,11 +22,17 @@ void initialize() {
 	Motor intake(intakePort, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_DEGREES);
 	Motor catapult(catapultPort, E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_DEGREES);
 	Motor pusher(pusherPort, E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_DEGREES);
+
 	//Motor catapultL(catapultLPort, E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_DEGREES);
 	//Motor catapultR(catapultRPort, E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_DEGREES);
 
+
 	ADIAnalogIn cataPot(catapultPotPort);
 	delay(200);
+	ADIAnalogIn temp(gyroPort);
+	delay(200);
+	ADIGyro gyro(gyroPort);
+  
 
 	lift.tare_position();
   pusher.tare_position();

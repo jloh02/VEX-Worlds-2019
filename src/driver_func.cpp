@@ -30,6 +30,7 @@ void scoreCap(){
     BR.move(-backOutPower);
   }
   setLift(0);
+  setPusher(80);
 }
 void descoreCap(){
   Motor FL (FLport);
@@ -38,7 +39,7 @@ void descoreCap(){
   Motor BR (BRport);
   Motor lift(liftPort);
 
-  setPusher(25);
+  setPusher(23);
   setLift(liftDescorePosition);
   while(fabs(liftDescorePosition - lift.get_position()) > 5){
   //  master.print(2,0,"%3f",lift.get_position());
@@ -64,6 +65,7 @@ void descoreCap(){
   }
   setLift(0);
   delay(descoreDelay);
+  setPusher(80);
 }
 
 void directClimb(){
@@ -74,7 +76,7 @@ void directClimb(){
   Motor lift(liftPort);
   ADIGyro gyro(gyroPort);
 
-  gyro.reset();
+
 
   Motor pusher (pusherPort);
   setLift(0);
@@ -95,7 +97,7 @@ void directClimb(){
   BR.move_relative(0, 100);
 
   setClimb(true);
-  //pauseLift(true);
+  pauseLift(true);
 
   //nani tf? liddat it'll only print once at the start?
   printf("%f\n",pusher.get_position());
@@ -124,14 +126,14 @@ void directClimb(){
   BR.tare_position();
   double startClimb = millis();
 
-  while(gyro.get_value() > 300){  //MARCUS WONG! IT'S IN 1/10 DEGREES
+  while(gyro.get_value() > 300){
     FL.move(100);
     BL.move(100);
     FR.move(100);
     BR.move(100);
     delay(25);
   }
-  while(gyro.get_value() > 50){  //MARCUS WONG! IT'S IN 1/10 DEGREES
+  while(gyro.get_value() > 50){
     if(millis()-startClimb > 500){
       setClimb(false);
       setPusher(170);
@@ -147,6 +149,7 @@ void directClimb(){
   BL.move_relative(0, 80);
   FR.move_relative(0, 80);
   BR.move_relative(0, 80);
+  pauseLift(false);
   setLift(20);
   delay(200);
 }

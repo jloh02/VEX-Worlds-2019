@@ -23,11 +23,10 @@ void autonomous() {
   lift.tare_position();
   Motor pusher (pusherPort);
   pusher.tare_position();
-  
-  //resetCoord(0,0,0);
-  //baseMove(40,0.52,0.9);
-  //waitBase(10000);
-  autonNum = 5;
+  ADIGyro gyro(gyroPort);
+  gyro.reset();
+
+  autonNum = 6;     //Comment out this line to enable selector
   switch(autonNum){
     case 1:
       basicRed();

@@ -30,6 +30,7 @@ void scoreCap(){
     BR.move(-backOutPower);
   }
   setLift(0);
+  setPusher(80);
 }
 void descoreCap(){
   Motor FL (FLport);
@@ -38,7 +39,7 @@ void descoreCap(){
   Motor BR (BRport);
   Motor lift(liftPort);
 
-  setPusher(25);
+  setPusher(23);
   setLift(liftDescorePosition);
   while(fabs(liftDescorePosition - lift.get_position()) > 5){
   //  master.print(2,0,"%3f",lift.get_position());
@@ -64,6 +65,7 @@ void descoreCap(){
   }
   setLift(0);
   delay(descoreDelay);
+  setPusher(80);
 }
 
 void directClimb(){
@@ -73,6 +75,8 @@ void directClimb(){
   Motor BR (BRport);
   Motor lift(liftPort);
   ADIGyro gyro(gyroPort);
+
+
 
   Motor pusher (pusherPort);
   setLift(0);
@@ -93,11 +97,12 @@ void directClimb(){
   BR.move_relative(0, 100);
 
   setClimb(true);
-  //pauseLift(true);
+  pauseLift(true);
 
   //nani tf? liddat it'll only print once at the start?
   printf("%f\n",pusher.get_position());
-  while(pusher.get_position() > -680 ) {
+  double startPush = millis();
+  while(pusher.get_position() > -680  && millis()-startPush < 1000) {
     printf("%f\n",pusher.get_position());
   /*  if(pusher.get_position() < -650){
       FL.move(100);
@@ -120,20 +125,15 @@ void directClimb(){
   BL.tare_position();
   BR.tare_position();
   double startClimb = millis();
-  /*  while(gyro.get_value() <480){
-    if(millis()-startClimb< 2000){
-      setClimb(false);
-      pausePusher(true);
-    }
-    FL.move(120);
-    BL.move(120);
-    FR.move(120);
-    BR.move(120);
-    printf("%f \t %f\n",BL.get_actual_velocity(),FL.get_actual_velocity());
+
+  while(gyro.get_value() > 300){
+    FL.move(100);
+    BL.move(100);
+    FR.move(100);
+    BR.move(100);
     delay(25);
   }
-  */
-  while(gyro.get_value() > 20){
+  while(gyro.get_value() > 50){
     if(millis()-startClimb > 500){
       setClimb(false);
       setPusher(170);
@@ -142,13 +142,14 @@ void directClimb(){
     BL.move(120);
     FR.move(120);
     BR.move(120);
-    //printf("%f \t %f\n",BL.get_actual_velocity(),FL.get_actual_velocity());
-    delay(100);
+    delay(25);
   }
+  delay(75);
   FL.move_relative(0, 80);
   BL.move_relative(0, 80);
   FR.move_relative(0, 80);
   BR.move_relative(0, 80);
+  pauseLift(false);
   setLift(20);
   delay(200);
 }
