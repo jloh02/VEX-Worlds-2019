@@ -76,7 +76,7 @@ void directClimb(){
   Motor lift(liftPort);
   ADIGyro gyro(gyroPort);
 
-
+  gyro.reset();
 
   Motor pusher (pusherPort);
   setLift(0);
@@ -99,11 +99,10 @@ void directClimb(){
   setClimb(true);
   pauseLift(true);
 
-  //nani tf? liddat it'll only print once at the start?
-  printf("%f\n",pusher.get_position());
+  //printf("%f\n",pusher.get_position());
   double startPush = millis();
   while(pusher.get_position() > -680  && millis()-startPush < 1000) {
-    printf("%f\n",pusher.get_position());
+  //  printf("%f\n",pusher.get_position());
   /*  if(pusher.get_position() < -650){
       FL.move(100);
       BL.move(100);
@@ -124,20 +123,25 @@ void directClimb(){
   FR.tare_position();
   BL.tare_position();
   BR.tare_position();
-  double startClimb = millis();
+  //double startClimb = millis();
 
-  while(gyro.get_value() > 300){
+  double gyroValue = gyro.get_value();
+  while(gyroValue > 300){
+    gyroValue = gyro.get_value();
     FL.move(100);
     BL.move(100);
     FR.move(100);
     BR.move(100);
+    printf("%f\n",gyroValue);
     delay(25);
   }
-  while(gyro.get_value() > 50){
-    if(millis()-startClimb > 500){
-      setClimb(false);
-      setPusher(170);
-    }
+  while(gyroValue > 50){
+    gyroValue = gyro.get_value();
+    //if(millis()-startClimb > 500){
+    setClimb(false);
+    setPusher(170);
+    //}
+    //printf("%f\n",gyroValue);
     FL.move(120);
     BL.move(120);
     FR.move(120);

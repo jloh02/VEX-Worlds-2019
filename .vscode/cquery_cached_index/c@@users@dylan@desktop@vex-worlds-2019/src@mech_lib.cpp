@@ -11,7 +11,7 @@ bool liftPause = false;
 
 #define catapultReadyAngle 1500
 #define catapultShootAngle 2450
-#define minFireTime 150
+#define minFireTime 1000
 
 #define liftP 1.0
 #define liftD 0.0
