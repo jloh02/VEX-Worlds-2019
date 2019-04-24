@@ -43,31 +43,37 @@ void descoreCap(){
   setPusher(23);
   setLift(liftDescorePosition);
   double startDecore = millis();
-  while(fabs(liftDescorePosition - lift.get_position()) > 5 && millis()-startDecore<1000){
+  while(fabs(liftDescorePosition - lift.get_position()) > 5 && millis()-startDecore<1500){
   //  master.print(2,0,"%3f",lift.get_position());
     FL.move(0);
     BL.move(0);
     FR.move(0);
     BR.move(0);
   }
-  delay(pushInDelay);
-  int startPushIn = millis();
-  while(millis() - startPushIn < pushInTime){
-    FL.move(pushInPower);
-    BL.move(pushInPower);
-    FR.move(pushInPower);
-    BR.move(pushInPower);
+  if(millis()-startDecore > 1500) {  //Sup marcus 9.24am 24/4
+    setLift(0);
+    setPusher(80);
   }
-  int startPushIn2 = millis();
-  while(millis() - startPushIn2 < pushIn2Time){
-    FL.move(pushIn2Power);
-    BL.move(pushIn2Power);
-    FR.move(pushIn2Power);
-    BR.move(pushIn2Power);
+  else{
+    delay(pushInDelay);
+    int startPushIn = millis();
+    while(millis() - startPushIn < pushInTime){
+      FL.move(pushInPower);
+      BL.move(pushInPower);
+      FR.move(pushInPower);
+      BR.move(pushInPower);
+    }
+    int startPushIn2 = millis();
+    while(millis() - startPushIn2 < pushIn2Time){
+      FL.move(pushIn2Power);
+      BL.move(pushIn2Power);
+      FR.move(pushIn2Power);
+      BR.move(pushIn2Power);
+    }
+    setLift(0);
+    delay(descoreDelay);
+    setPusher(80);
   }
-  setLift(0);
-  delay(descoreDelay);
-  setPusher(80);
 }
 
 void directClimb(){
