@@ -132,6 +132,24 @@ void opcontrol() {
       pausePusher(false);
     };
 
+if(master.get_digital_new_press(DIGITAL_LEFT) == 1) {
+  double startreset = millis();
+  while(millis()- startreset < 1000){
+  pusher.move(80);
+}
+delay(200);
+ pausePusher(true);
+ delay(200);
+  pusher.tare_position();
+  delay(100);
+  pausePusher(false);
+  setPusher(80);
+  delay(100);
+
+}
+
+
+
     targetIntakeSpd = master.get_digital(DIGITAL_R1)*110-master.get_digital(DIGITAL_R2)*110;
     //targetIntakeSpd*=-1;
 

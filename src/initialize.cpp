@@ -32,7 +32,8 @@ void initialize() {
 	ADIAnalogIn temp(gyroPort);
 	delay(200);
 	ADIGyro gyro(gyroPort);
-  
+	delay(1000);
+
 
 	lift.tare_position();
   pusher.tare_position();
