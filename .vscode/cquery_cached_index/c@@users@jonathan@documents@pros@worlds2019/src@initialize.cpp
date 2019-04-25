@@ -31,9 +31,8 @@ void initialize() {
 	delay(200);
 	ADIAnalogIn temp(gyroPort);
 	delay(200);
-	printf("Is it calibrating?\n");
 	ADIGyro gyro(gyroPort);
-	printf("Did I come out 1s later?\n");
+	delay(1000);
 
 
 	lift.tare_position();

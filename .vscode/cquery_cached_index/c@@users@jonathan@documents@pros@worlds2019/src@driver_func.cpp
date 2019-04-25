@@ -11,7 +11,7 @@ void scoreCap(){
   pausePusher(true);
   setLift(liftScorePosition);
   double startScore = millis();
-  while(fabs(liftScorePosition - lift.get_position()) > 5 && millis()-startScore<1300){
+  while(fabs(liftScorePosition - lift.get_position()) > 5 && millis()-startScore<1000){
     //master.print(2,0,"%3f",lift.get_position());
     FL.move(poleAlignPower);
     BL.move(poleAlignPower);
@@ -30,7 +30,9 @@ void scoreCap(){
     BR.move(-backOutPower);
   }
   setLift(0);
+  setPusher(80);
 }
+
 void descoreCap(){
   Motor FL (FLport);
   Motor BL (BLport);
@@ -38,32 +40,41 @@ void descoreCap(){
   Motor BR (BRport);
   Motor lift(liftPort);
 
-  setPusher(25);
+  setPusher(23);
   setLift(liftDescorePosition);
-  while(fabs(liftDescorePosition - lift.get_position()) > 5){
+  double startDecore = millis();
+  while(fabs(liftDescorePosition - lift.get_position()) > 5 && millis()-startDecore<1500){
   //  master.print(2,0,"%3f",lift.get_position());
     FL.move(0);
     BL.move(0);
     FR.move(0);
     BR.move(0);
   }
-  delay(pushInDelay);
-  int startPushIn = millis();
-  while(millis() - startPushIn < pushInTime){
-    FL.move(pushInPower);
-    BL.move(pushInPower);
-    FR.move(pushInPower);
-    BR.move(pushInPower);
+  if(millis()-startDecore >= 1500) {  //Sup marcus 9.24am 24/4
+    setLift(0);
+    delay(50);
+    setPusher(80);
   }
-  int startPushIn2 = millis();
-  while(millis() - startPushIn2 < pushIn2Time){
-    FL.move(pushIn2Power);
-    BL.move(pushIn2Power);
-    FR.move(pushIn2Power);
-    BR.move(pushIn2Power);
+  else{
+    delay(pushInDelay);
+    int startPushIn = millis();
+    while(millis() - startPushIn < pushInTime){
+      FL.move(pushInPower);
+      BL.move(pushInPower);
+      FR.move(pushInPower);
+      BR.move(pushInPower);
+    }
+    int startPushIn2 = millis();
+    while(millis() - startPushIn2 < pushIn2Time){
+      FL.move(pushIn2Power);
+      BL.move(pushIn2Power);
+      FR.move(pushIn2Power);
+      BR.move(pushIn2Power);
+    }
+    setLift(0);
+    delay(descoreDelay);
+    setPusher(80);
   }
-  setLift(0);
-  delay(descoreDelay);
 }
 
 void directClimb(){
@@ -95,13 +106,12 @@ void directClimb(){
   BR.move_relative(0, 100);
 
   setClimb(true);
-  //pauseLift(true);
+  pauseLift(true);
 
-  //nani tf? liddat it'll only print once at the start?
-  printf("%f\n",pusher.get_position());
+  //printf("%f\n",pusher.get_position());
   double startPush = millis();
-  while(pusher.get_position() > -680  && millis()-startPush < 1000) {
-    printf("%f\n",pusher.get_position());
+  while(pusher.get_position() > -685  && millis()-startPush < 1000) {
+  //  printf("%f\n",pusher.get_position());
   /*  if(pusher.get_position() < -650){
       FL.move(100);
       BL.move(100);
@@ -122,20 +132,25 @@ void directClimb(){
   FR.tare_position();
   BL.tare_position();
   BR.tare_position();
-  double startClimb = millis();
+  //double startClimb = millis();
 
-  while(gyro.get_value() > 300){  //MARCUS WONG! IT'S IN 1/10 DEGREES
+  double gyroValue = gyro.get_value();
+  while(gyroValue > 300){
+    gyroValue = gyro.get_value();
     FL.move(100);
     BL.move(100);
     FR.move(100);
     BR.move(100);
+    printf("%f\n",gyroValue);
     delay(25);
   }
-  while(gyro.get_value() > 50){  //MARCUS WONG! IT'S IN 1/10 DEGREES
-    if(millis()-startClimb > 500){
-      setClimb(false);
-      setPusher(170);
-    }
+  while(gyroValue > 50){
+    gyroValue = gyro.get_value();
+    //if(millis()-startClimb > 500){
+    setClimb(false);
+    setPusher(170);
+    //}
+    //printf("%f\n",gyroValue);
     FL.move(120);
     BL.move(120);
     FR.move(120);
@@ -147,6 +162,7 @@ void directClimb(){
   BL.move_relative(0, 80);
   FR.move_relative(0, 80);
   BR.move_relative(0, 80);
+  pauseLift(false);
   setLift(20);
   delay(200);
 }

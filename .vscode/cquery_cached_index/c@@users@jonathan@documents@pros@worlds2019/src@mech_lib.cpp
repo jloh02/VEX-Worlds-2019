@@ -11,7 +11,7 @@ bool liftPause = false;
 
 #define catapultReadyAngle 1500
 #define catapultShootAngle 2450
-#define minFireTime 150
+#define minFireTime 1000
 
 #define liftP 1.0
 #define liftD 0.0
@@ -33,10 +33,10 @@ void catapultControl(void * ignore){
 	while(true){
 		//if(master.get_digital(DIGITAL_Y) == 1) catapult.move(-70);//, catapultR.move(-70);
 		/*else*/
-		//printf("%d\n",cataPot.get_value());
+	 //printf("%d\n",cataPot.get_value());
 		if(cataPot.get_value()==0) catapult.move(0);
 		else if(cataPot.get_value() > catapultReadyAngle && !catapultReady){
-			//master.print(2, 0, "%4d Readying...", cataPot.get_value());
+			master.print(2, 0, "%4d Readying...", cataPot.get_value());
 			catapult.move(100);
 			//catapultR.move(100);
 		}
@@ -83,9 +83,10 @@ void liftControl(void * ignore){
 		int power = error*liftP + (error-oldErr)*liftD;
 		oldErr = error;
 
-		if(abs(error) < 2 || master.get_digital(DIGITAL_X) || liftPause) {
-			lift.move(0);
-		}
+		if(abs(error) < 2 || liftPause) lift.move(0);
+	else if (master.get_digital(DIGITAL_UP) )lift.move(50);
+	else if (master.get_digital(DIGITAL_DOWN)) lift.move(-50);
+
 		else lift.move(power);
 
 		delay(25);
