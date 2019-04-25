@@ -39,6 +39,7 @@ void opcontrol() {
   Motor intake(intakePort);
   Motor lift(liftPort);
   Motor pusher(pusherPort);
+
   ADIGyro gyro(gyroPort);
 
   Controller master(E_CONTROLLER_MASTER);
@@ -56,15 +57,14 @@ void opcontrol() {
   int intakeSpd = 0;
   bool pusherReadyToFlip = false;
 
-  setPusher(40);
+  setPusher(80);
   setLift(liftDownPosition);
 	while (true) {
     //master.print(2, 0, "Auton: %2d", autonNum);
     //master.print(2, 0, "Pot: %4d", cataPot.get_value());
     //master.print(2, 0, "Pow: %7d", catapult.get_power());
     //printf("Gyro value : %f\n", gyro.get_value());
-
-		int left = master.get_analog(ANALOG_LEFT_Y);
+    int left = master.get_analog(ANALOG_LEFT_Y);
 		int right = master.get_analog(ANALOG_RIGHT_Y);
 
     if(master.get_digital_new_press(DIGITAL_L2) == 1) catapultActivated = true;
@@ -80,7 +80,6 @@ void opcontrol() {
 
     if(master.get_digital_new_press(DIGITAL_X) == 1) { //Auto getting balls from the cap
       if(!pusherReadyToFlip) {
-        setPusher(300);
         pusherReadyToFlip = true;
       }
       else{
@@ -95,7 +94,7 @@ void opcontrol() {
         BL.tare_position();
         BR.tare_position();
         double startReverse = millis();
-        while(millis()-startReverse < 700){
+        while(millis()-startReverse < 300){
           FL.move(-70);
           BL.move(-70);
           FR.move(-70);
@@ -103,17 +102,34 @@ void opcontrol() {
           intake.move(100);
           delay(25);
         }
+      /*  FL.move(0);
+        BL.move(0);
+        FR.move(0);
+        BR.move(0);
+        delay(1000);
+        double startReverse2 = millis();
+        while(millis()-startReverse2 < 300){
+          FL.move(-70);
+          BL.move(-70);
+          FR.move(-70);
+          BR.move(-70);
+          intake.move(100);
+          delay(25);
+        }*/
         pausePusher(false);
-        setPusher(40);
-        intake.move(100);
+        setPusher(80);
+        intake.move(0);
         delay(200);
         pusherReadyToFlip = false;
       }
+      if(pusherReadyToFlip) setPusher(300);
+      else setPusher(80);
+
       FL.move_relative(0, 100);
       BL.move_relative(0, 100);
       FR.move_relative(0, 100);
       BR.move_relative(0, 100);
-      intake.move(100);
+      intake.move(0);
       delay(200);
       pausePusher(false);
     };
@@ -127,7 +143,6 @@ void opcontrol() {
 
     intake.move(intakeSpd);
 
-    //pusher.move((master.get_digital(DIGITAL_UP)-master.get_digital(DIGITAL_DOWN))*120);
     FL.move(left-2);
     BL.move(left+2);
     FR.move(right-2);

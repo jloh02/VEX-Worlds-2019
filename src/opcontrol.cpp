@@ -80,7 +80,6 @@ void opcontrol() {
 
     if(master.get_digital_new_press(DIGITAL_X) == 1) { //Auto getting balls from the cap
       if(!pusherReadyToFlip) {
-        setPusher(300);
         pusherReadyToFlip = true;
       }
       else{
@@ -123,6 +122,9 @@ void opcontrol() {
         delay(200);
         pusherReadyToFlip = false;
       }
+      if(pusherReadyToFlip) setPusher(300);
+      else setPusher(80);
+
       FL.move_relative(0, 100);
       BL.move_relative(0, 100);
       FR.move_relative(0, 100);
