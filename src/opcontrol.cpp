@@ -103,9 +103,23 @@ void opcontrol() {
           intake.move(100);
           delay(25);
         }
+      /*  FL.move(0);
+        BL.move(0);
+        FR.move(0);
+        BR.move(0);
+        delay(1000);
+        double startReverse2 = millis();
+        while(millis()-startReverse2 < 300){
+          FL.move(-70);
+          BL.move(-70);
+          FR.move(-70);
+          BR.move(-70);
+          intake.move(100);
+          delay(25);
+        }*/
         pausePusher(false);
         setPusher(80);
-        intake.move(100);
+        intake.move(0);
         delay(200);
         pusherReadyToFlip = false;
       }
@@ -113,7 +127,7 @@ void opcontrol() {
       BL.move_relative(0, 100);
       FR.move_relative(0, 100);
       BR.move_relative(0, 100);
-      intake.move(100);
+      intake.move(0);
       delay(200);
       pausePusher(false);
     };
