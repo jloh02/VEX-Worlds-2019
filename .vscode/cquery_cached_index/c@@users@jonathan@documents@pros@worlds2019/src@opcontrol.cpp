@@ -122,8 +122,6 @@ void opcontrol() {
         delay(200);
         pusherReadyToFlip = false;
       }
-      if(pusherReadyToFlip) setPusher(300);
-      else setPusher(80);
 
       FL.move_relative(0, 100);
       BL.move_relative(0, 100);
@@ -148,6 +146,8 @@ void opcontrol() {
       delay(100);
     }
 
+    if(master.get_digital_new_press(DIGITAL_RIGHT) == 1) pusherReadyToFlip = false;
+
     targetIntakeSpd = master.get_digital(DIGITAL_R1)*110-master.get_digital(DIGITAL_R2)*110;
     //targetIntakeSpd*=-1;
 
@@ -161,6 +161,9 @@ void opcontrol() {
     BL.move(left+2);
     FR.move(right-2);
     BR.move(right+2);
+
+    if(pusherReadyToFlip) setPusher(300);
+    else setPusher(80);
 
     pausePusher(false);
     setClimb(false);
