@@ -92,7 +92,7 @@ void safe_skills(){
   waitBase(500);
   baseTurn(-60,0.6,0.3);   //turn to get to the other cap with 2 balls
   waitBase(700);
-  baseMove(-75,0.55,0.0);   //move to the cap with two balls
+  baseMove(-76,0.55,0.0);   //move to the cap with two balls
   waitBase(2500);
   baseTurn(0,0.6,0.3);   //turn to continue blue side auton
   waitBase(650);
@@ -101,11 +101,11 @@ void safe_skills(){
   //blue auton basically
 
   setPusher(250);   //Pusher in position to get balls from cap
-  baseMove(11.5,0.5,0.2);    //Position to get good angle to get balls from cap
+  baseMove(11,0.5,0.2);    //Position to get good angle to get balls from cap
   waitBase(600);
-  baseTurn(-46, 0.62, 0.2);   //Face cap
+  baseTurn(-47, 0.62, 0.2);   //Face cap
   waitBase(550);
-  baseMove(15.5, 0.2, 0.0);  //Move towards cap
+  baseMove(14, 0.2, 0.0);  //Move towards cap
   waitBase(800);
   setPusher(390);
   delay(350);

@@ -83,9 +83,10 @@ void liftControl(void * ignore){
 		int power = error*liftP + (error-oldErr)*liftD;
 		oldErr = error;
 
-		if(abs(error) < 2 || master.get_digital(DIGITAL_X) || liftPause) {
-			lift.move(0);
-		}
+		if(abs(error) < 2 || liftPause) lift.move(0);
+	else if (master.get_digital(DIGITAL_UP) )lift.move(50);
+	else if (master.get_digital(DIGITAL_DOWN)) lift.move(-50);
+
 		else lift.move(power);
 
 		delay(25);

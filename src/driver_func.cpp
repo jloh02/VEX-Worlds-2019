@@ -50,8 +50,9 @@ void descoreCap(){
     FR.move(0);
     BR.move(0);
   }
-  if(millis()-startDecore > 1500) {  //Sup marcus 9.24am 24/4
+  if(millis()-startDecore >= 1500) {  //Sup marcus 9.24am 24/4
     setLift(0);
+    delay(50);
     setPusher(80);
   }
   else{
@@ -109,7 +110,7 @@ void directClimb(){
 
   //printf("%f\n",pusher.get_position());
   double startPush = millis();
-  while(pusher.get_position() > -680  && millis()-startPush < 1000) {
+  while(pusher.get_position() > -685  && millis()-startPush < 1000) {
   //  printf("%f\n",pusher.get_position());
   /*  if(pusher.get_position() < -650){
       FL.move(100);
