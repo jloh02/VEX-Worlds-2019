@@ -40,7 +40,7 @@ void opcontrol() {
   Motor lift(liftPort);
   Motor pusher(pusherPort);
 
-  ADIGyro gyro(gyroPort);
+  //ADIGyro gyro(gyroPort);
 
   Controller master(E_CONTROLLER_MASTER);
 
@@ -56,14 +56,18 @@ void opcontrol() {
   int targetIntakeSpd = 0;
   int intakeSpd = 0;
   bool pusherReadyToFlip = false;
-
+  ADIAnalogIn temp(gyroPort);
+  	delay(200);
+    ADIGyro gyro(gyroPort);
+  	delay(1000);
+gyro.reset();
   setPusher(80);
   setLift(liftDownPosition);
 	while (true) {
     //master.print(2, 0, "Auton: %2d", autonNum);
     //master.print(2, 0, "Pot: %4d", cataPot.get_value());
     //master.print(2, 0, "Pow: %7d", catapult.get_power());
-    //printf("Gyro value : %f\n", gyro.get_value());
+    printf("Gyro value : %f\n", gyro.get_value());
     int left = master.get_analog(ANALOG_LEFT_Y);
 		int right = master.get_analog(ANALOG_RIGHT_Y);
 
@@ -80,7 +84,6 @@ void opcontrol() {
 
     if(master.get_digital_new_press(DIGITAL_X) == 1) { //Auto getting balls from the cap
       if(!pusherReadyToFlip) {
-        setPusher(300);
         pusherReadyToFlip = true;
       }
       else{
@@ -123,6 +126,7 @@ void opcontrol() {
         delay(200);
         pusherReadyToFlip = false;
       }
+
       FL.move_relative(0, 100);
       BL.move_relative(0, 100);
       FR.move_relative(0, 100);
@@ -132,23 +136,21 @@ void opcontrol() {
       pausePusher(false);
     };
 
-if(master.get_digital_new_press(DIGITAL_LEFT) == 1) {
-  double startreset = millis();
-  while(millis()- startreset < 1000){
-  pusher.move(80);
-}
-delay(200);
- pausePusher(true);
- delay(200);
-  pusher.tare_position();
-  delay(100);
-  pausePusher(false);
-  setPusher(80);
-  delay(100);
+    if(master.get_digital_new_press(DIGITAL_LEFT) == 1) {
+      double startReset = millis();
+      while(millis()- startReset < 1000) pusher.move(80);
+      double midReset = millis();
+      while(millis()- midReset < 100) pusher.move(15);
+      pausePusher(true);
+      delay(200);
+      pusher.tare_position();
+      delay(100);
+      pausePusher(false);
+      setPusher(80);
+      delay(100);
+    }
 
-}
-
-
+    if(master.get_digital_new_press(DIGITAL_RIGHT) == 1) pusherReadyToFlip = false;
 
     targetIntakeSpd = master.get_digital(DIGITAL_R1)*110-master.get_digital(DIGITAL_R2)*110;
     //targetIntakeSpd*=-1;
@@ -163,6 +165,9 @@ delay(200);
     BL.move(left+2);
     FR.move(right-2);
     BR.move(right+2);
+
+    if(pusherReadyToFlip) setPusher(300);
+    else setPusher(80);
 
     pausePusher(false);
     setClimb(false);

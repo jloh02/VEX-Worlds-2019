@@ -40,7 +40,7 @@ void descoreCap(){
   Motor BR (BRport);
   Motor lift(liftPort);
 
-  setPusher(20);
+  setPusher(27);
   setLift(liftDescorePosition);
   double startDecore = millis();
   while(fabs(liftDescorePosition - lift.get_position()) > 5 && millis()-startDecore<1500){

@@ -29,12 +29,11 @@ void initialize() {
 
 	ADIAnalogIn cataPot(catapultPotPort);
 	delay(200);
-	ADIAnalogIn temp(gyroPort);
+  /*ADIAnalogIn temp(gyroPort);
 	delay(200);
-	ADIGyro gyro(gyroPort);
+  ADIGyro gyro(gyroPort);
 	delay(1000);
-
-
+*/
 	lift.tare_position();
   pusher.tare_position();
 }
