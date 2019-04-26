@@ -95,7 +95,7 @@ void opcontrol() {
         BL.tare_position();
         BR.tare_position();
         double startReverse = millis();
-        while(millis()-startReverse < 700){
+        while(millis()-startReverse < 300){
           FL.move(-70);
           BL.move(-70);
           FR.move(-70);

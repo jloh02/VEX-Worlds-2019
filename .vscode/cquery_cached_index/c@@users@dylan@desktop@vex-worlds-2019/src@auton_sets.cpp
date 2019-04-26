@@ -245,9 +245,9 @@ void blueCore(){
   waitBase(600);*/
   delay(750);
 
-  baseMove(-12,0.5,0.0);     //Reverse to original position
+  baseMove(-9,0.5,0.0);     //Reverse to original position
   waitBase(600);
-  //setPusher(80);
+  setPusher(80);
 
   baseTurn(-83,0.9,0.0);      //Turn to get to position to hit next set of flags
   waitBase(500);
