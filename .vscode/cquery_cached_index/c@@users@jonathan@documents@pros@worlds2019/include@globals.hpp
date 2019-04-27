@@ -14,7 +14,7 @@ extern bool catapultActivated;
 #define catapultPort 17
 #define pusherPort 18
 
-#define visionPort 6
+//#define visionPort 6
 
 #define catapultPotPort 8
 #define gyroPort 7

@@ -40,8 +40,6 @@ void opcontrol() {
   Motor lift(liftPort);
   Motor pusher(pusherPort);
 
-  ADIGyro gyro(gyroPort);
-
   Controller master(E_CONTROLLER_MASTER);
 
   ADIAnalogIn cataPot(1);
@@ -56,7 +54,11 @@ void opcontrol() {
   int targetIntakeSpd = 0;
   int intakeSpd = 0;
   bool pusherReadyToFlip = false;
-
+/*  ADIAnalogIn temp(gyroPort);
+  	//delay(200);
+    ADIGyro gyro(gyroPort);
+  	//delay(1000);
+*/
   setPusher(80);
   setLift(liftDownPosition);
 	while (true) {
@@ -136,7 +138,7 @@ void opcontrol() {
       double startReset = millis();
       while(millis()- startReset < 1000) pusher.move(80);
       double midReset = millis();
-      while(millis()- midReset < 100) pusher.move(20);
+      while(millis()- midReset < 100) pusher.move(15);
       pausePusher(true);
       delay(200);
       pusher.tare_position();
@@ -148,7 +150,7 @@ void opcontrol() {
 
     if(master.get_digital_new_press(DIGITAL_RIGHT) == 1) pusherReadyToFlip = false;
 
-    targetIntakeSpd = master.get_digital(DIGITAL_R1)*110-master.get_digital(DIGITAL_R2)*110;
+    targetIntakeSpd = master.get_digital(DIGITAL_R1)*105-master.get_digital(DIGITAL_R2)*105;
     //targetIntakeSpd*=-1;
 
     int diff = targetIntakeSpd - intakeSpd;

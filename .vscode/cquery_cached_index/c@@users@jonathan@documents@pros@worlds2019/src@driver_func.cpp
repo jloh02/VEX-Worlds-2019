@@ -40,7 +40,7 @@ void descoreCap(){
   Motor BR (BRport);
   Motor lift(liftPort);
 
-  setPusher(23);
+  setPusher(27);
   setLift(liftDescorePosition);
   double startDecore = millis();
   while(fabs(liftDescorePosition - lift.get_position()) > 5 && millis()-startDecore<1500){
@@ -83,17 +83,16 @@ void directClimb(){
   Motor FR (FRport);
   Motor BR (BRport);
   Motor lift(liftPort);
-  ADIGyro gyro(gyroPort);
-
-  gyro.reset();
-
   Motor pusher (pusherPort);
+
+  Controller master(E_CONTROLLER_MASTER);
+
   setLift(0);
   FL.tare_position();
   FR.tare_position();
   BL.tare_position();
   BR.tare_position();
-  while(BL.get_position()>-15 && BR.get_position()>-15){
+  while(BL.get_position()>-25 && BR.get_position()>-25){
     FL.move(-70);
     BL.move(-70);
     FR.move(-70);
@@ -132,25 +131,20 @@ void directClimb(){
   FR.tare_position();
   BL.tare_position();
   BR.tare_position();
-  //double startClimb = millis();
+  double startClimb = millis();
 
-  double gyroValue = gyro.get_value();
-  while(gyroValue > 300){
-    gyroValue = gyro.get_value();
+  while(millis()-startClimb < 500){
     FL.move(100);
     BL.move(100);
     FR.move(100);
     BR.move(100);
-    printf("%f\n",gyroValue);
     delay(25);
   }
-  while(gyroValue > 50){
-    gyroValue = gyro.get_value();
+  while(master.get_digital_new_press(DIGITAL_Y) == 0){
     //if(millis()-startClimb > 500){
     setClimb(false);
     setPusher(170);
     //}
-    //printf("%f\n",gyroValue);
     FL.move(120);
     BL.move(120);
     FR.move(120);

@@ -40,8 +40,6 @@ void opcontrol() {
   Motor lift(liftPort);
   Motor pusher(pusherPort);
 
- ADIGyro gyro(gyroPort);
-
   Controller master(E_CONTROLLER_MASTER);
 
   ADIAnalogIn cataPot(1);
@@ -61,14 +59,13 @@ void opcontrol() {
     ADIGyro gyro(gyroPort);
   	//delay(1000);
 */
-   gyro.reset();
   setPusher(80);
   setLift(liftDownPosition);
 	while (true) {
     //master.print(2, 0, "Auton: %2d", autonNum);
     //master.print(2, 0, "Pot: %4d", cataPot.get_value());
     //master.print(2, 0, "Pow: %7d", catapult.get_power());
-  //printf("Gyro value : %f\n", gyro.get_value());
+    //printf("Gyro value : %f\n", gyro.get_value());
     int left = master.get_analog(ANALOG_LEFT_Y);
 		int right = master.get_analog(ANALOG_RIGHT_Y);
 

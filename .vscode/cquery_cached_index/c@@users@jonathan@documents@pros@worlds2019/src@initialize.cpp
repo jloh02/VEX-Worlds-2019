@@ -29,11 +29,9 @@ void initialize() {
 
 	ADIAnalogIn cataPot(catapultPotPort);
 	delay(200);
-	ADIAnalogIn temp(gyroPort);
+  ADIAnalogIn temp(gyroPort);
 	delay(200);
-	ADIGyro gyro(gyroPort);
-	delay(1000);
-
+  ADIGyro gyro(gyroPort);
 
 	lift.tare_position();
   pusher.tare_position();
@@ -57,6 +55,11 @@ void disabled() {
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
+ /*ADIAnalogIn temp(gyroPort);
+
+	 ADIGyro gyro(gyroPort);
+	*/
+
 void competition_initialize() {
 
 }
