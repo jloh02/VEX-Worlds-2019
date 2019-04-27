@@ -93,7 +93,7 @@ void directClimb(){
   FR.tare_position();
   BL.tare_position();
   BR.tare_position();
-  while(BL.get_position()>-15 && BR.get_position()>-15){
+  while(BL.get_position()>-25 && BR.get_position()>-25){
     FL.move(-70);
     BL.move(-70);
     FR.move(-70);
@@ -132,7 +132,7 @@ void directClimb(){
   FR.tare_position();
   BL.tare_position();
   BR.tare_position();
-  //double startClimb = millis();
+  double startClimb = millis();
 
   double gyroValue = gyro.get_value();
   while(gyroValue > 300){
@@ -146,10 +146,10 @@ void directClimb(){
   }
   while(gyroValue > 50){
     gyroValue = gyro.get_value();
-    //if(millis()-startClimb > 500){
+    if(millis()-startClimb > 500){
     setClimb(false);
     setPusher(170);
-    //}
+    }
     //printf("%f\n",gyroValue);
     FL.move(120);
     BL.move(120);

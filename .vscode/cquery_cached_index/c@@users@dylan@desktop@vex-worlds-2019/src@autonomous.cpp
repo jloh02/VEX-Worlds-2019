@@ -26,7 +26,7 @@ void autonomous() {
   ADIGyro gyro(gyroPort);
   gyro.reset();
 
-  autonNum = 1;     //Comment out this line to enable selector
+  autonNum = 6;     //Comment out this line to enable selector
   switch(autonNum){
     case 1:
       basicRed();

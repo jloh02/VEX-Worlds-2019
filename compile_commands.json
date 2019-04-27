@@ -28,11 +28,11 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "bin/auton_sets.cpp.o",
-            "src\\auton_sets.cpp"
+            "bin/real_skills.cpp.o",
+            "src\\real_skills.cpp"
         ],
         "directory": "C:\\Users\\DYLAN\\Desktop\\VEX-Worlds-2019",
-        "file": "src\\auton_sets.cpp"
+        "file": "src\\real_skills.cpp"
     },
     {
         "arguments": [
@@ -133,46 +133,11 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "bin/safe_skills.cpp.o",
-            "src\\safe_skills.cpp"
+            "bin/initialize.cpp.o",
+            "src\\initialize.cpp"
         ],
         "directory": "C:\\Users\\DYLAN\\Desktop\\VEX-Worlds-2019",
-        "file": "src\\safe_skills.cpp"
-    },
-    {
-        "arguments": [
-            "clang++",
-            "-c",
-            "-target",
-            "armv7ar-none-none-eabi",
-            "-fno-ms-extensions",
-            "-fno-ms-compatibility",
-            "-fno-delayed-template-parsing",
-            "-isystemc:\\users\\dylan\\appdata\\local\\programs\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1",
-            "-isystemc:\\users\\dylan\\appdata\\local\\programs\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1/arm-none-eabi/thumb/v7-ar/fpv3/softfp",
-            "-isystemc:\\users\\dylan\\appdata\\local\\programs\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1/backward",
-            "-isystemc:\\users\\dylan\\appdata\\local\\programs\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/include",
-            "-isystemc:\\users\\dylan\\appdata\\local\\programs\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/include-fixed",
-            "-isystemc:\\users\\dylan\\appdata\\local\\programs\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include",
-            "-iquote./include",
-            "-iquote./include/./",
-            "-mcpu=cortex-a9",
-            "-mfpu=neon-fp16",
-            "-mfloat-abi=softfp",
-            "-D_POSIX_THREADS",
-            "-D_UNIX98_THREAD_MUTEX_ATTRIBUTES",
-            "-Os",
-            "-funwind-tables",
-            "-ffunction-sections",
-            "-fdata-sections",
-            "-fdiagnostics-color",
-            "--std=gnu++17",
-            "-o",
-            "bin/base_lib.cpp.o",
-            "src\\base_lib.cpp"
-        ],
-        "directory": "C:\\Users\\DYLAN\\Desktop\\VEX-Worlds-2019",
-        "file": "src\\base_lib.cpp"
+        "file": "src\\initialize.cpp"
     },
     {
         "arguments": [
@@ -238,11 +203,11 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "bin/real_skills.cpp.o",
-            "src\\real_skills.cpp"
+            "bin/base_lib.cpp.o",
+            "src\\base_lib.cpp"
         ],
         "directory": "C:\\Users\\DYLAN\\Desktop\\VEX-Worlds-2019",
-        "file": "src\\real_skills.cpp"
+        "file": "src\\base_lib.cpp"
     },
     {
         "arguments": [
@@ -273,11 +238,11 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "bin/autonomous.cpp.o",
-            "src\\autonomous.cpp"
+            "bin/safe_skills.cpp.o",
+            "src\\safe_skills.cpp"
         ],
         "directory": "C:\\Users\\DYLAN\\Desktop\\VEX-Worlds-2019",
-        "file": "src\\autonomous.cpp"
+        "file": "src\\safe_skills.cpp"
     },
     {
         "arguments": [
@@ -308,11 +273,11 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "bin/initialize.cpp.o",
-            "src\\initialize.cpp"
+            "bin/auton_sets.cpp.o",
+            "src\\auton_sets.cpp"
         ],
         "directory": "C:\\Users\\DYLAN\\Desktop\\VEX-Worlds-2019",
-        "file": "src\\initialize.cpp"
+        "file": "src\\auton_sets.cpp"
     },
     {
         "arguments": [
@@ -348,5 +313,40 @@
         ],
         "directory": "C:\\Users\\DYLAN\\Desktop\\VEX-Worlds-2019",
         "file": "src\\opcontrol.cpp"
+    },
+    {
+        "arguments": [
+            "clang++",
+            "-c",
+            "-target",
+            "armv7ar-none-none-eabi",
+            "-fno-ms-extensions",
+            "-fno-ms-compatibility",
+            "-fno-delayed-template-parsing",
+            "-isystemc:\\users\\dylan\\appdata\\local\\programs\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1",
+            "-isystemc:\\users\\dylan\\appdata\\local\\programs\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1/arm-none-eabi/thumb/v7-ar/fpv3/softfp",
+            "-isystemc:\\users\\dylan\\appdata\\local\\programs\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1/backward",
+            "-isystemc:\\users\\dylan\\appdata\\local\\programs\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/include",
+            "-isystemc:\\users\\dylan\\appdata\\local\\programs\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/include-fixed",
+            "-isystemc:\\users\\dylan\\appdata\\local\\programs\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include",
+            "-iquote./include",
+            "-iquote./include/./",
+            "-mcpu=cortex-a9",
+            "-mfpu=neon-fp16",
+            "-mfloat-abi=softfp",
+            "-D_POSIX_THREADS",
+            "-D_UNIX98_THREAD_MUTEX_ATTRIBUTES",
+            "-Os",
+            "-funwind-tables",
+            "-ffunction-sections",
+            "-fdata-sections",
+            "-fdiagnostics-color",
+            "--std=gnu++17",
+            "-o",
+            "bin/autonomous.cpp.o",
+            "src\\autonomous.cpp"
+        ],
+        "directory": "C:\\Users\\DYLAN\\Desktop\\VEX-Worlds-2019",
+        "file": "src\\autonomous.cpp"
     }
 ]
